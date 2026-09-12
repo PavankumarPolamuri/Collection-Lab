@@ -1,0 +1,196 @@
+import React, { useEffect, useState } from 'react';
+import type { CollectionType, OperationResponse, OperationHistoryItem } from '../../types/collections';
+import { api } from '../../services/api';
+import { ArrayListVisualizer } from '../visualizers/ArrayListVisualizer';
+import { LinkedListVisualizer } from '../visualizers/LinkedListVisualizer';
+import { HashMapVisualizer } from '../visualizers/HashMapVisualizer';
+import { TreeMapVisualizer } from '../visualizers/TreeMapVisualizer';
+import { PriorityQueueVisualizer } from '../visualizers/PriorityQueueVisualizer';
+import { ControlPanel } from '../panels/ControlPanel';
+import { StepsPanel } from '../panels/StepsPanel';
+import { HistoryPanel } from '../panels/HistoryPanel';
+
+interface CollectionViewProps {
+  collectionId: string;
+  history: OperationHistoryItem[];
+  setHistory: React.Dispatch<React.SetStateAction<OperationHistoryItem[]>>;
+}
+
+export const CollectionView: React.FC<CollectionViewProps> = ({
+  collectionId,
+  history,
+  setHistory
+}) => {
+  const collectionType: CollectionType = (collectionId.toUpperCase().replace('-', '_')) as CollectionType;
+
+  const [stateData, setStateData] = useState<any>(null);
+  const [lastResponse, setLastResponse] = useState<OperationResponse | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  // Fetch initial state on load / collectionId switch
+  const fetchState = async () => {
+    setLoading(true);
+    setErrorMsg(null);
+    try {
+      if (collectionId === 'arraylist') {
+        const data = await api.getArrayListState();
+        setStateData(data);
+      } else if (collectionId === 'linkedlist') {
+        const data = await api.getLinkedListState();
+        setStateData(data);
+      } else if (collectionId === 'hashmap') {
+        const data = await api.getHashMapState();
+        setStateData(data);
+      } else if (collectionId === 'treemap') {
+        const data = await api.getTreeMapState();
+        setStateData(data);
+      } else if (collectionId === 'priorityqueue') {
+        const data = await api.getPriorityQueueState();
+        setStateData(data);
+      }
+    } catch (err: any) {
+      setErrorMsg(`Failed to connect to backend REST API: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchState();
+    setLastResponse(null);
+  }, [collectionId]);
+
+  const addHistoryItem = (res: OperationResponse) => {
+    const item: OperationHistoryItem = {
+      id: Math.random().toString(36).substring(2, 9),
+      timestamp: new Date().toLocaleTimeString(),
+      structure: res.structure,
+      operation: res.operation,
+      success: res.success,
+      complexity: res.complexity,
+      input: JSON.stringify(res.input ?? 'None'),
+      steps: res.steps,
+      errorMessage: res.errorMessage
+    };
+    setHistory((prev) => [item, ...prev]);
+  };
+
+  const handleExecuteOperation = async (op: string, params: { value?: string; key?: string; index?: number; type?: string }) => {
+    setLoading(true);
+    setErrorMsg(null);
+    try {
+      let res: OperationResponse | null = null;
+
+      if (collectionId === 'arraylist') {
+        if (op === 'ADD') res = await api.addArrayList(params.value || '');
+        else if (op === 'ADD_AT') res = await api.addAtArrayList(params.index || 0, params.value || '');
+        else if (op === 'GET') res = await api.getArrayListItem(params.index || 0);
+        else if (op === 'SET') res = await api.setArrayListItem(params.index || 0, params.value || '');
+        else if (op === 'CONTAINS') res = await api.containsArrayList(params.value || '');
+        else if (op === 'INDEX_OF') res = await api.indexOfArrayList(params.value || '');
+        else if (op === 'REMOVE') res = await api.removeArrayListItem(params.index || 0);
+        else if (op === 'REMOVE_BY_VALUE') res = await api.removeValueArrayList(params.value || '');
+      } else if (collectionId === 'linkedlist') {
+        if (op === 'ADD_FIRST') res = await api.addFirstLinkedList(params.value || '');
+        else if (op === 'ADD_LAST') res = await api.addLastLinkedList(params.value || '');
+        else if (op === 'ADD_AT') res = await api.addAtLinkedList(params.index || 0, params.value || '');
+        else if (op === 'GET') res = await api.getLinkedListNode(params.index || 0);
+        else if (op === 'SET') res = await api.setLinkedListNode(params.index || 0, params.value || '');
+        else if (op === 'CONTAINS') res = await api.containsLinkedList(params.value || '');
+        else if (op === 'INDEX_OF') res = await api.indexOfLinkedList(params.value || '');
+        else if (op === 'REMOVE_FIRST') res = await api.removeFirstLinkedList();
+        else if (op === 'REMOVE_LAST') res = await api.removeLastLinkedList();
+        else if (op === 'REMOVE') res = await api.removeLinkedListNode(params.index || 0);
+        else if (op === 'REMOVE_BY_VALUE') res = await api.removeValueLinkedList(params.value || '');
+      } else if (collectionId === 'hashmap') {
+        if (op === 'PUT') res = await api.putHashMap(params.key || '', params.value || '');
+        else if (op === 'GET') res = await api.getHashMapValue(params.key || '');
+        else if (op === 'CONTAINS_KEY') res = await api.containsKeyHashMap(params.key || '');
+        else if (op === 'CONTAINS_VALUE') res = await api.containsValueHashMap(params.value || '');
+        else if (op === 'REMOVE') res = await api.removeHashMapKey(params.key || '');
+      } else if (collectionId === 'treemap') {
+        if (op === 'PUT') res = await api.putTreeMap(params.key || '', params.value || '');
+        else if (op === 'GET') res = await api.getTreeMapValue(params.key || '');
+        else if (op === 'CONTAINS_KEY') res = await api.containsKeyTreeMap(params.key || '');
+        else if (op === 'FIRST_KEY') res = await api.getFirstKeyTreeMap();
+        else if (op === 'LAST_KEY') res = await api.getLastKeyTreeMap();
+        else if (op === 'REMOVE') res = await api.removeTreeMapKey(params.key || '');
+        else if (op === 'TRAVERSAL') res = await api.getTreeMapTraversal((params.type as any) || 'inorder');
+      } else if (collectionId === 'priorityqueue') {
+        if (op === 'OFFER') res = await api.offerPriorityQueue(params.value || '');
+        else if (op === 'PEEK') res = await api.peekPriorityQueue();
+        else if (op === 'POLL') res = await api.pollPriorityQueue();
+      }
+
+      if (res) {
+        setLastResponse(res);
+        setStateData(res.newState);
+        addHistoryItem(res);
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResetCollection = async () => {
+    setLoading(true);
+    try {
+      let res: OperationResponse | null = null;
+      if (collectionId === 'arraylist') res = await api.clearArrayList();
+      else if (collectionId === 'linkedlist') res = await api.clearLinkedList();
+      else if (collectionId === 'hashmap') res = await api.clearHashMap();
+      else if (collectionId === 'treemap') res = await api.clearTreeMap();
+      else if (collectionId === 'priorityqueue') res = await api.clearPriorityQueue();
+
+      if (res) {
+        setLastResponse(res);
+        setStateData(res.newState);
+        addHistoryItem(res);
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6 py-2">
+      {/* Error Alert */}
+      {errorMsg && (
+        <div className="p-4 bg-rose-500/10 border border-rose-500/30 rounded-xl text-xs font-mono text-rose-300 flex items-center justify-between">
+          <span>{errorMsg}</span>
+          <button onClick={() => setErrorMsg(null)} className="text-slate-400 hover:text-white">Dismiss</button>
+        </div>
+      )}
+
+      {/* Primary Collection Visualizer Widget */}
+      {stateData && (
+        <>
+          {collectionId === 'arraylist' && <ArrayListVisualizer state={stateData} lastResponse={lastResponse} />}
+          {collectionId === 'linkedlist' && <LinkedListVisualizer state={stateData} lastResponse={lastResponse} />}
+          {collectionId === 'hashmap' && <HashMapVisualizer state={stateData} lastResponse={lastResponse} />}
+          {collectionId === 'treemap' && <TreeMapVisualizer state={stateData} lastResponse={lastResponse} />}
+          {collectionId === 'priorityqueue' && <PriorityQueueVisualizer state={stateData} lastResponse={lastResponse} />}
+        </>
+      )}
+
+      {/* Grid: Operation Controls & Execution Trace */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ControlPanel
+          collectionType={collectionType}
+          onExecute={handleExecuteOperation}
+          onReset={handleResetCollection}
+          loading={loading}
+        />
+        <StepsPanel lastResponse={lastResponse} />
+      </div>
+
+      {/* History Session Log */}
+      <HistoryPanel history={history} onClearHistory={() => setHistory([])} />
+    </div>
+  );
+};
