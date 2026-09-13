@@ -21,7 +21,16 @@ export const CollectionView: React.FC<CollectionViewProps> = ({
   history,
   setHistory
 }) => {
-  const collectionType: CollectionType = (collectionId.toUpperCase().replace('-', '_')) as CollectionType;
+  const normalizeCollectionType = (id: string): CollectionType => {
+    const clean = id.toLowerCase().replace(/[^a-z]/g, '');
+    if (clean === 'linkedlist') return 'LINKED_LIST';
+    if (clean === 'hashmap') return 'HASH_MAP';
+    if (clean === 'treemap') return 'TREE_MAP';
+    if (clean === 'priorityqueue') return 'PRIORITY_QUEUE';
+    return 'ARRAY_LIST';
+  };
+
+  const collectionType: CollectionType = normalizeCollectionType(collectionId);
 
   const [stateData, setStateData] = useState<any>(null);
   const [lastResponse, setLastResponse] = useState<OperationResponse | null>(null);

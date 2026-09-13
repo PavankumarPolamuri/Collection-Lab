@@ -28,6 +28,13 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
     onExecute(op, { value: finalValue, key: finalKey, index: index >= 0 ? index : 0, type: traversalType });
   };
 
+  const normalizedType = collectionType ? collectionType.toUpperCase().replace('-', '_') : 'ARRAY_LIST';
+  const isArrayList = normalizedType === 'ARRAY_LIST' || normalizedType === 'ARRAYLIST';
+  const isLinkedList = normalizedType === 'LINKED_LIST' || normalizedType === 'LINKEDLIST';
+  const isHashMap = normalizedType === 'HASH_MAP' || normalizedType === 'HASHMAP';
+  const isTreeMap = normalizedType === 'TREE_MAP' || normalizedType === 'TREEMAP';
+  const isPriorityQueue = normalizedType === 'PRIORITY_QUEUE' || normalizedType === 'PRIORITYQUEUE';
+
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm dark:shadow-xl space-y-4 transition-colors">
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
@@ -46,7 +53,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
       </div>
 
       {/* ARRAY LIST CONTROLS */}
-      {collectionType === 'ARRAY_LIST' && (
+      {isArrayList && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
@@ -142,7 +149,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
       )}
 
       {/* LINKED LIST CONTROLS */}
-      {collectionType === 'LINKED_LIST' && (
+      {isLinkedList && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
@@ -263,7 +270,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
       )}
 
       {/* HASH MAP CONTROLS */}
-      {collectionType === 'HASH_MAP' && (
+      {isHashMap && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
@@ -338,7 +345,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
       )}
 
       {/* TREE MAP CONTROLS */}
-      {collectionType === 'TREE_MAP' && (
+      {isTreeMap && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
@@ -437,7 +444,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
       )}
 
       {/* PRIORITY QUEUE CONTROLS */}
-      {collectionType === 'PRIORITY_QUEUE' && (
+      {isPriorityQueue && (
         <div className="space-y-4">
           <div>
             <label className="block text-xs font-medium text-slate-400 mb-1">Element Value (Min-Heap)</label>
