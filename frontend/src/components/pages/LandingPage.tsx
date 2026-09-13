@@ -19,10 +19,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'Dynamic array with automatic capacity expansion.',
       icon: List,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#FF6B00]/30 hover:border-[#FF6B00]',
+      borderColor: 'border-[#84CC16]/30 hover:border-[#84CC16]',
       glowClass: 'hover:glow-arraylist',
-      iconBg: 'bg-[#FF6B00] text-white',
-      btnBg: 'bg-[#FF6B00] hover:bg-[#EA580C] text-white shadow-orange-500/20',
+      iconBg: 'bg-[#84CC16] text-black font-extrabold',
+      btnBg: 'bg-[#84CC16] hover:bg-[#65A30D] text-black font-extrabold shadow-lime-500/20',
       bullets: [{ label: 'Access', value: 'O(1)' }, { label: 'Search', value: 'O(n)' }, { label: 'Insert', value: 'O(1)*' }]
     },
     {
@@ -201,16 +201,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
     <div className="bg-[#080D18] py-3 max-w-[1400px] mx-auto px-4 sm:px-6 space-y-8">
       {/* HERO SECTION */}
       <section className="relative overflow-hidden bg-[#0D1424] border border-white/10 rounded-2xl p-6 lg:p-8 shadow-2xl flex items-center min-h-[280px]">
-        <div className="absolute -top-20 -right-20 w-80 h-80 bg-[#FF6B00]/15 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+        <div className="absolute -top-20 -right-20 w-80 h-80 bg-[#84CC16]/15 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center w-full relative z-10">
           <div className="lg:col-span-8 space-y-3 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-[#FF6B00]/10 border border-[#FF6B00]/30 rounded-full text-xs font-mono font-medium text-[#FF6B00]">
-              <Sparkles className="w-3.5 h-3.5 text-[#FF6B00]" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-[#84CC16]/10 border border-[#84CC16]/30 rounded-full text-xs font-mono font-medium text-[#84CC16]">
+              <Sparkles className="w-3.5 h-3.5 text-[#84CC16]" />
               <span>CollectionLab • 15 Custom DSA Collections</span>
             </div>
 
             <h1 className="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight leading-tight">
-              Interactive Custom <span className="text-[#FF6B00]">Java Data Structures</span> Visualizer
+              Interactive Custom <span className="text-[#84CC16]">Java Data Structures</span> Visualizer
             </h1>
 
             <p className="text-xs sm:text-sm text-[#A7B3C7] font-sans font-normal leading-relaxed max-w-2xl">
@@ -220,7 +220,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 onClick={() => onSelectTab('arraylist')}
-                className="flex items-center gap-2 px-5 py-2.5 bg-[#FF6B00] hover:bg-[#EA580C] text-white rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-orange-500/25 transition-all cursor-pointer"
+                className="flex items-center gap-2 px-5 py-2.5 bg-[#84CC16] hover:bg-[#65A30D] text-black font-extrabold rounded-full text-xs sm:text-sm shadow-lg shadow-lime-500/25 transition-all cursor-pointer"
               >
                 <span>Launch Collection Visualizers</span>
                 <ArrowRight className="w-4 h-4" />
@@ -230,7 +230,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
                 onClick={() => onOpenCodeViewer('ArrayList')}
                 className="flex items-center gap-2 px-5 py-2.5 bg-[#10182A] hover:bg-[#121C30] text-white border border-white/10 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer"
               >
-                <Code2 className="w-4 h-4 text-[#FF6B00]" />
+                <Code2 className="w-4 h-4 text-[#84CC16]" />
                 <span>View Real Source Code</span>
               </button>
             </div>
@@ -244,7 +244,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
           <h2 className="text-xs font-mono font-bold text-[#A7B3C7] uppercase tracking-wider">
             Featured Data Structure Visualizers ({visibleCollections.length} / {collections.length})
           </h2>
-          <span className="text-xs font-mono text-[#FF6B00] bg-[#FF6B00]/10 px-2.5 py-0.5 rounded-full border border-[#FF6B00]/30">
+          <span className="text-xs font-mono text-[#84CC16] bg-[#84CC16]/10 px-2.5 py-0.5 rounded-full border border-[#84CC16]/30">
             Real Spring Boot Backend
           </span>
         </div>
@@ -280,7 +280,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
                 <div className="pt-3 border-t border-white/10 flex items-center justify-between">
                   <button
                     onClick={() => onOpenCodeViewer(col.name)}
-                    className="text-xs text-[#A7B3C7] hover:text-[#FF6B00] font-mono flex items-center gap-1 cursor-pointer transition-colors"
+                    className="text-xs text-[#A7B3C7] hover:text-[#84CC16] font-mono flex items-center gap-1 cursor-pointer transition-colors"
                   >
                     <Code2 className="w-3.5 h-3.5" /> Code
                   </button>
@@ -303,7 +303,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
           {!showAll ? (
             <button
               onClick={() => setShowAll(true)}
-              className="flex items-center gap-2.5 px-7 py-3.5 bg-[#FF6B00] hover:bg-[#EA580C] text-white rounded-full text-sm font-bold shadow-xl shadow-orange-500/25 transition-all cursor-pointer hover:scale-105"
+              className="flex items-center gap-2.5 px-7 py-3.5 bg-[#84CC16] hover:bg-[#65A30D] text-black font-extrabold rounded-full text-sm shadow-xl shadow-lime-500/25 transition-all cursor-pointer hover:scale-105"
             >
               <span>Explore Collections &rarr;</span>
             </button>
@@ -313,7 +313,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
               className="flex items-center gap-2.5 px-7 py-3.5 bg-[#10182A] hover:bg-[#121C30] text-slate-200 border border-white/20 rounded-full text-sm font-bold shadow-xl transition-all cursor-pointer hover:scale-105"
             >
               <span>Show Less &uarr;</span>
-              <ChevronUp className="w-4 h-4 text-[#FF6B00]" />
+              <ChevronUp className="w-4 h-4 text-[#84CC16]" />
             </button>
           )}
         </div>

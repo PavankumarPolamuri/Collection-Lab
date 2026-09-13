@@ -82,14 +82,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectCollection, onOpen
                 <div className="pt-3 border-t border-[#DCE6F2] dark:border-slate-800 flex items-center justify-between">
                   <button
                     onClick={() => onOpenCodeViewer(col.id)}
-                    className="flex items-center gap-1 text-xs text-[#475569] hover:text-[#FF6B00] dark:text-slate-400 dark:hover:text-orange-400 font-mono font-medium transition-colors cursor-pointer"
+                    className="flex items-center gap-1 text-xs text-[#475569] hover:text-[#84CC16] dark:text-slate-400 dark:hover:text-lime-400 font-mono font-medium transition-colors cursor-pointer"
                   >
                     <Code2 className="w-3.5 h-3.5" /> Source
                   </button>
 
                   <button
                     onClick={() => onSelectCollection(col.id)}
-                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#FF6B00] hover:bg-[#EA580C] text-white rounded-xl text-xs sm:text-[13px] font-sans font-semibold shadow-xs transition-all cursor-pointer"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#84CC16] hover:bg-[#65A30D] text-black rounded-xl text-xs sm:text-[13px] font-sans font-extrabold shadow-xs transition-all cursor-pointer"
                   >
                     <span>Launch Visualizer</span>
                     <ArrowRight className="w-3.5 h-3.5" />

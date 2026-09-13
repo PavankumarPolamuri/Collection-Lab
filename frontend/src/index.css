@@ -9,8 +9,8 @@
   --text-secondary: #A7B3C7;
   --text-muted: #718096;
   --border-color: rgba(255, 255, 255, 0.10);
-  --primary-orange: #FF6B00;
-  --col-arraylist: #FF6B00;
+  --primary-orange: #84CC16;
+  --col-arraylist: #84CC16;
   --col-linkedlist: #10C98B;
   --col-hashmap: #7C3AED;
   --col-treemap: #F59E0B;
@@ -26,7 +26,7 @@
   --text-secondary: #A7B3C7;
   --text-muted: #718096;
   --border-color: rgba(255, 255, 255, 0.10);
-  --primary-orange: #FF6B00;
+  --primary-orange: #84CC16;
 }
 
 html, body, #root {
@@ -66,17 +66,17 @@ code, pre, .font-mono {
   border: 1px solid rgba(255, 255, 255, 0.10);
 }
 
-.orange-glow {
-  box-shadow: 0 0 25px rgba(255, 107, 0, 0.25);
+.orange-glow, .lime-glow {
+  box-shadow: 0 0 25px rgba(132, 204, 22, 0.25);
 }
 
-.orange-text-glow {
-  text-shadow: 0 0 16px rgba(255, 107, 0, 0.5);
+.orange-text-glow, .lime-text-glow {
+  text-shadow: 0 0 16px rgba(132, 204, 22, 0.5);
 }
 
 /* Collection-specific subtle glows */
 .glow-arraylist {
-  box-shadow: 0 4px 20px rgba(255, 107, 0, 0.18);
+  box-shadow: 0 4px 20px rgba(132, 204, 22, 0.18);
 }
 .glow-linkedlist {
   box-shadow: 0 4px 20px rgba(16, 201, 139, 0.18);

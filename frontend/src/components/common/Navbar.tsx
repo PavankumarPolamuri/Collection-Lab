@@ -83,13 +83,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="flex items-center gap-3 cursor-pointer group shrink-0 text-left bg-transparent border-0 p-0 focus:outline-none"
           aria-label="Go to CollectionLab home"
         >
-          <div className="p-2.5 bg-[#FF6B00] rounded-xl text-white shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform">
-            <Box className="w-5 h-5" />
+          <div className="p-2.5 bg-[#84CC16] rounded-xl text-black shadow-md shadow-lime-500/20 group-hover:scale-105 transition-transform">
+            <Box className="w-5 h-5 stroke-[2.5]" />
           </div>
           <div>
             <div className="font-heading font-extrabold text-base sm:text-lg tracking-tight text-white flex items-center gap-1 leading-none">
               <span>Collection</span>
-              <span className="text-[#FF6B00]">Lab</span>
+              <span className="text-[#84CC16]">Lab</span>
             </div>
             <span className="text-[10px] text-[#A7B3C7] hidden lg:block mt-0.5 font-sans font-medium">
               15 Custom Java DSA Visualizers
@@ -105,7 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectTab('home')}
             className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'home' || currentTab === 'landing'
-                ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-semibold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
+                ? 'text-[#84CC16] bg-[#84CC16]/15 font-semibold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
             }`}
           >
@@ -119,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => setCollectionsOpen(!collectionsOpen)}
               className={`flex items-center gap-1.5 transition-all cursor-pointer ${
                 isCollectionActive
-                  ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-semibold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
+                  ? 'text-[#84CC16] bg-[#84CC16]/15 font-semibold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
                   : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
               }`}
             >
@@ -144,7 +144,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       }}
                       className={`flex items-center gap-3 w-full p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
                         currentTab === col.id
-                          ? 'bg-orange-500/15 border border-orange-500/30'
+                          ? 'bg-lime-500/15 border border-lime-500/30'
                           : 'hover:bg-[#121C30]'
                       }`}
                     >
@@ -167,7 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectTab('learning')}
             className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'learning'
-                ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
+                ? 'text-[#84CC16] bg-[#84CC16]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
             }`}
           >
@@ -180,7 +180,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectTab('benchmark')}
             className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'benchmark'
-                ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
+                ? 'text-[#84CC16] bg-[#84CC16]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
             }`}
           >
@@ -193,7 +193,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectTab('about')}
             className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'about'
-                ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
+                ? 'text-[#84CC16] bg-[#84CC16]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
             }`}
           >
@@ -206,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectTab('contact')}
             className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'contact'
-                ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
+                ? 'text-[#84CC16] bg-[#84CC16]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
             }`}
           >
@@ -229,7 +229,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }}
                 onFocus={() => setSearchOpen(true)}
                 placeholder="Search collections..."
-                className="w-56 sm:w-64 lg:w-72 bg-[#10182A] border border-white/10 rounded-full pl-9 pr-4 py-1.5 text-xs text-white placeholder:text-[#718096] focus:outline-none focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]/50 transition-all font-sans"
+                className="w-56 sm:w-64 lg:w-72 bg-[#10182A] border border-white/10 rounded-full pl-9 pr-4 py-1.5 text-xs text-white placeholder:text-[#718096] focus:outline-none focus:border-[#84CC16] focus:ring-1 focus:ring-[#84CC16]/50 transition-all font-sans"
               />
             </div>
 
@@ -249,7 +249,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     className="flex items-center justify-between w-full px-3 py-2 rounded-xl text-left text-xs hover:bg-[#121C30] transition-colors cursor-pointer"
                   >
                     <span className="font-medium text-white">{item.name}</span>
-                    <span className="text-[9px] font-mono px-1.5 py-0.5 bg-orange-500/20 text-[#FF6B00] rounded border border-orange-500/30">
+                    <span className="text-[9px] font-mono px-1.5 py-0.5 bg-lime-500/20 text-[#84CC16] rounded border border-lime-500/30">
                       {item.category}
                     </span>
                   </button>
@@ -260,7 +260,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => onOpenCodeViewer()}
-            className="flex items-center gap-2 px-4 py-2 bg-[#FF6B00] hover:bg-[#EA580C] text-white rounded-full text-xs font-bold shadow-md shadow-orange-500/20 transition-all shrink-0 cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 bg-[#84CC16] hover:bg-[#65A30D] text-black font-extrabold rounded-full text-xs shadow-md shadow-lime-500/20 transition-all shrink-0 cursor-pointer"
             title="Inspect Real Java Backend Source Code"
           >
             <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
