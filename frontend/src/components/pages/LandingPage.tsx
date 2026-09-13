@@ -33,8 +33,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       cardBg: 'bg-[#10182A]',
       borderColor: 'border-[#10C98B]/30 hover:border-[#10C98B]',
       glowClass: 'hover:glow-linkedlist',
-      iconBg: 'bg-[#10C98B] text-white',
-      btnBg: 'bg-[#10C98B] hover:bg-emerald-600 text-white shadow-emerald-500/20',
+      iconBg: 'bg-[#10C98B] text-black font-extrabold',
+      btnBg: 'bg-[#10C98B] hover:bg-[#0E9F6E] text-black font-extrabold shadow-emerald-500/20',
       bullets: [{ label: 'Access', value: 'O(n)' }, { label: 'Insert', value: 'O(1)' }, { label: 'Delete', value: 'O(1)' }]
     },
     {
@@ -43,10 +43,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'Linked node sequence looping tail node back to head.',
       icon: RefreshCcw,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#6366F1]/30 hover:border-[#6366F1]',
+      borderColor: 'border-[#06B6D4]/30 hover:border-[#06B6D4]',
       glowClass: 'hover:glow-linkedlist',
-      iconBg: 'bg-[#6366F1] text-white',
-      btnBg: 'bg-[#6366F1] hover:bg-indigo-600 text-white shadow-indigo-500/20',
+      iconBg: 'bg-[#06B6D4] text-black font-extrabold',
+      btnBg: 'bg-[#06B6D4] hover:bg-[#0891B2] text-black font-extrabold shadow-cyan-500/20',
       bullets: [{ label: 'Head/Tail', value: 'O(1)' }, { label: 'Search', value: 'O(n)' }, { label: 'Loop', value: 'Circular' }]
     },
     {
@@ -55,10 +55,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'LIFO vertical structure supporting push, pop, and peek.',
       icon: Layers,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#6366F1]/30 hover:border-[#6366F1]',
+      borderColor: 'border-[#3B82F6]/30 hover:border-[#3B82F6]',
       glowClass: 'hover:glow-linkedlist',
-      iconBg: 'bg-[#6366F1] text-white',
-      btnBg: 'bg-[#6366F1] hover:bg-indigo-600 text-white shadow-indigo-500/20',
+      iconBg: 'bg-[#3B82F6] text-white font-extrabold',
+      btnBg: 'bg-[#3B82F6] hover:bg-[#2563EB] text-white font-extrabold shadow-blue-500/20',
       bullets: [{ label: 'Push', value: 'O(1)' }, { label: 'Pop', value: 'O(1)' }, { label: 'Peek', value: 'O(1)' }]
     },
     {
@@ -67,10 +67,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'FIFO line structure with front and rear pointers.',
       icon: ListFilter,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#3B82F6]/30 hover:border-[#3B82F6]',
+      borderColor: 'border-[#8B5CF6]/30 hover:border-[#8B5CF6]',
       glowClass: 'hover:glow-arraylist',
-      iconBg: 'bg-[#3B82F6] text-white',
-      btnBg: 'bg-[#3B82F6] hover:bg-blue-600 text-white shadow-blue-500/20',
+      iconBg: 'bg-[#8B5CF6] text-white font-extrabold',
+      btnBg: 'bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-extrabold shadow-violet-500/20',
       bullets: [{ label: 'Enqueue', value: 'O(1)' }, { label: 'Dequeue', value: 'O(1)' }, { label: 'Peek', value: 'O(1)' }]
     },
     {
@@ -79,10 +79,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'Double-ended queue with insertion/removal at both ends.',
       icon: ArrowLeftRight,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#8B5CF6]/30 hover:border-[#8B5CF6]',
+      borderColor: 'border-[#D946EF]/30 hover:border-[#D946EF]',
       glowClass: 'hover:glow-hashmap',
-      iconBg: 'bg-[#8B5CF6] text-white',
-      btnBg: 'bg-[#8B5CF6] hover:bg-purple-600 text-white shadow-purple-500/20',
+      iconBg: 'bg-[#D946EF] text-white font-extrabold',
+      btnBg: 'bg-[#D946EF] hover:bg-[#C026D3] text-white font-extrabold shadow-fuchsia-500/20',
       bullets: [{ label: 'Add First/Last', value: 'O(1)' }, { label: 'Remove First/Last', value: 'O(1)' }]
     },
     {
@@ -91,10 +91,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'Hash table with collision handling and resizing.',
       icon: Hash,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#7C3AED]/30 hover:border-[#7C3AED]',
+      borderColor: 'border-[#EC4899]/30 hover:border-[#EC4899]',
       glowClass: 'hover:glow-hashmap',
-      iconBg: 'bg-[#7C3AED] text-white',
-      btnBg: 'bg-[#7C3AED] hover:bg-purple-700 text-white shadow-purple-500/20',
+      iconBg: 'bg-[#EC4899] text-white font-extrabold',
+      btnBg: 'bg-[#EC4899] hover:bg-[#DB2777] text-white font-extrabold shadow-pink-500/20',
       bullets: [{ label: 'Put/Get', value: 'O(1)' }, { label: 'Contains', value: 'O(1)' }, { label: 'Worst', value: 'O(n)' }]
     },
     {
@@ -103,10 +103,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'Hash table bucket array ensuring distinct set uniqueness.',
       icon: Hash,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#10C98B]/30 hover:border-[#10C98B]',
+      borderColor: 'border-[#F43F5E]/30 hover:border-[#F43F5E]',
       glowClass: 'hover:glow-linkedlist',
-      iconBg: 'bg-[#10C98B] text-white',
-      btnBg: 'bg-[#10C98B] hover:bg-emerald-600 text-white shadow-emerald-500/20',
+      iconBg: 'bg-[#F43F5E] text-white font-extrabold',
+      btnBg: 'bg-[#F43F5E] hover:bg-[#E11D48] text-white font-extrabold shadow-rose-500/20',
       bullets: [{ label: 'Add', value: 'O(1)' }, { label: 'Remove', value: 'O(1)' }, { label: 'Contains', value: 'O(1)' }]
     },
     {
@@ -115,10 +115,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'Binary heap for priority-based element retrieval.',
       icon: Layers,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#EC4899]/30 hover:border-[#EC4899]',
+      borderColor: 'border-[#F97316]/30 hover:border-[#F97316]',
       glowClass: 'hover:glow-priorityqueue',
-      iconBg: 'bg-[#EC4899] text-white',
-      btnBg: 'bg-[#EC4899] hover:bg-pink-600 text-white shadow-pink-500/20',
+      iconBg: 'bg-[#F97316] text-black font-extrabold',
+      btnBg: 'bg-[#F97316] hover:bg-[#EA580C] text-black font-extrabold shadow-orange-500/20',
       bullets: [{ label: 'Offer', value: 'O(log n)' }, { label: 'Poll', value: 'O(log n)' }, { label: 'Peek', value: 'O(1)' }]
     },
     {
@@ -129,8 +129,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       cardBg: 'bg-[#10182A]',
       borderColor: 'border-[#F59E0B]/30 hover:border-[#F59E0B]',
       glowClass: 'hover:glow-treemap',
-      iconBg: 'bg-[#F59E0B] text-white',
-      btnBg: 'bg-[#F59E0B] hover:bg-amber-600 text-white shadow-amber-500/20',
+      iconBg: 'bg-[#F59E0B] text-black font-extrabold',
+      btnBg: 'bg-[#F59E0B] hover:bg-[#D97706] text-black font-extrabold shadow-amber-500/20',
       bullets: [{ label: 'Search', value: 'O(log n)' }, { label: 'Insert', value: 'O(log n)' }, { label: 'Delete', value: 'O(log n)' }]
     },
     {
@@ -141,8 +141,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       cardBg: 'bg-[#10182A]',
       borderColor: 'border-[#6366F1]/30 hover:border-[#6366F1]',
       glowClass: 'hover:glow-treemap',
-      iconBg: 'bg-[#6366F1] text-white',
-      btnBg: 'bg-[#6366F1] hover:bg-indigo-600 text-white shadow-indigo-500/20',
+      iconBg: 'bg-[#6366F1] text-white font-extrabold',
+      btnBg: 'bg-[#6366F1] hover:bg-[#4F46E5] text-white font-extrabold shadow-indigo-500/20',
       bullets: [{ label: 'Insert', value: 'O(log n)' }, { label: 'Search', value: 'O(log n)' }, { label: 'Delete', value: 'O(log n)' }]
     },
     {
@@ -151,10 +151,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'Complete binary min-heap stored in array.',
       icon: Layers,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#F59E0B]/30 hover:border-[#F59E0B]',
+      borderColor: 'border-[#14B8A6]/30 hover:border-[#14B8A6]',
       glowClass: 'hover:glow-priorityqueue',
-      iconBg: 'bg-[#F59E0B] text-white',
-      btnBg: 'bg-[#F59E0B] hover:bg-amber-600 text-white shadow-amber-500/20',
+      iconBg: 'bg-[#14B8A6] text-black font-extrabold',
+      btnBg: 'bg-[#14B8A6] hover:bg-[#0D9488] text-black font-extrabold shadow-teal-500/20',
       bullets: [{ label: 'Insert', value: 'O(log n)' }, { label: 'Extract', value: 'O(log n)' }, { label: 'Peek', value: 'O(1)' }]
     },
     {
@@ -163,10 +163,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'Prefix tree for fast string search and autocomplete.',
       icon: Network,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#6366F1]/30 hover:border-[#6366F1]',
+      borderColor: 'border-[#0EA5E9]/30 hover:border-[#0EA5E9]',
       glowClass: 'hover:glow-hashmap',
-      iconBg: 'bg-[#6366F1] text-white',
-      btnBg: 'bg-[#6366F1] hover:bg-indigo-600 text-white shadow-indigo-500/20',
+      iconBg: 'bg-[#0EA5E9] text-black font-extrabold',
+      btnBg: 'bg-[#0EA5E9] hover:bg-[#0284C7] text-black font-extrabold shadow-sky-500/20',
       bullets: [{ label: 'Insert', value: 'O(L)' }, { label: 'Search', value: 'O(L)' }, { label: 'Prefix', value: 'O(L)' }]
     },
     {
@@ -175,10 +175,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'Adjacency list vertex & edge model with BFS and DFS.',
       icon: Network,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#0EA5E9]/30 hover:border-[#0EA5E9]',
+      borderColor: 'border-[#EF4444]/30 hover:border-[#EF4444]',
       glowClass: 'hover:glow-arraylist',
-      iconBg: 'bg-[#0EA5E9] text-white',
-      btnBg: 'bg-[#0EA5E9] hover:bg-sky-600 text-white shadow-sky-500/20',
+      iconBg: 'bg-[#EF4444] text-white font-extrabold',
+      btnBg: 'bg-[#EF4444] hover:bg-[#DC2626] text-white font-extrabold shadow-red-500/20',
       bullets: [{ label: 'BFS', value: 'O(V+E)' }, { label: 'DFS', value: 'O(V+E)' }, { label: 'Edges', value: 'Adjacency' }]
     },
     {
@@ -187,10 +187,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       description: 'Union-Find forest with path compression optimization.',
       icon: GitBranch,
       cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#10C98B]/30 hover:border-[#10C98B]',
+      borderColor: 'border-[#10B981]/30 hover:border-[#10B981]',
       glowClass: 'hover:glow-linkedlist',
-      iconBg: 'bg-[#10C98B] text-white',
-      btnBg: 'bg-[#10C98B] hover:bg-emerald-600 text-white shadow-emerald-500/20',
+      iconBg: 'bg-[#10B981] text-black font-extrabold',
+      btnBg: 'bg-[#10B981] hover:bg-[#059669] text-black font-extrabold shadow-emerald-500/20',
       bullets: [{ label: 'Find', value: 'O(α(n))' }, { label: 'Union', value: 'O(α(n))' }, { label: 'Optimized', value: 'Rank' }]
     }
   ];

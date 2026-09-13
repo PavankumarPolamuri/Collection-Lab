@@ -25,21 +25,21 @@ export const Navbar: React.FC<NavbarProps> = ({
   const searchRef = useRef<HTMLDivElement>(null);
 
   const collections = [
-    { id: 'arraylist', name: 'ArrayList', desc: 'Dynamic Array & Resizing', icon: Layers, color: 'text-blue-400 bg-blue-500/10' },
-    { id: 'linkedlist', name: 'LinkedList', desc: 'Doubly Linked Node Chain', icon: GitCommit, color: 'text-emerald-400 bg-emerald-500/10' },
-    { id: 'circularlinkedlist', name: 'Circular LinkedList', desc: 'Circular Tail-to-Head Loop', icon: RefreshCcw, color: 'text-indigo-400 bg-indigo-500/10' },
-    { id: 'stack', name: 'Stack', desc: 'LIFO Vertical Array', icon: Layers, color: 'text-indigo-400 bg-indigo-500/10' },
-    { id: 'queue', name: 'Queue', desc: 'FIFO Front/Rear Line', icon: ListFilter, color: 'text-blue-400 bg-blue-500/10' },
-    { id: 'deque', name: 'Deque', desc: 'Double-Ended Queue', icon: ArrowLeftRight, color: 'text-violet-400 bg-violet-500/10' },
-    { id: 'priorityqueue', name: 'PriorityQueue', desc: 'Binary Min-Heap Array', icon: ArrowUp10, color: 'text-pink-400 bg-pink-500/10' },
-    { id: 'hashmap', name: 'HashMap', desc: 'Chaining & Load Factor', icon: Grid, color: 'text-purple-400 bg-purple-500/10' },
-    { id: 'hashset', name: 'HashSet', desc: 'Unique Bucket Table', icon: Hash, color: 'text-emerald-400 bg-emerald-500/10' },
-    { id: 'treemap', name: 'TreeMap', desc: 'Red-Black BST & Search', icon: GitFork, color: 'text-amber-400 bg-amber-500/10' },
-    { id: 'bst', name: 'Binary Search Tree', desc: 'BST Node Hierarchy', icon: GitFork, color: 'text-indigo-400 bg-indigo-500/10' },
-    { id: 'heap', name: 'Min Heap', desc: 'Binary Min-Heap Tree', icon: ArrowUp10, color: 'text-amber-400 bg-amber-500/10' },
-    { id: 'trie', name: 'Trie', desc: 'Prefix Tree & Autocomplete', icon: Network, color: 'text-indigo-400 bg-indigo-500/10' },
-    { id: 'graph', name: 'Graph', desc: 'Adjacency List & BFS/DFS', icon: Network, color: 'text-sky-400 bg-sky-500/10' },
-    { id: 'disjointset', name: 'Disjoint Set', desc: 'Union-Find & Path Compression', icon: GitBranch, color: 'text-emerald-400 bg-emerald-500/10' }
+    { id: 'arraylist', name: 'ArrayList', desc: 'Dynamic Array & Resizing', icon: Layers, color: 'text-[#84CC16] bg-[#84CC16]/10 border border-[#84CC16]/20' },
+    { id: 'linkedlist', name: 'LinkedList', desc: 'Doubly Linked Node Chain', icon: GitCommit, color: 'text-[#10C98B] bg-[#10C98B]/10 border border-[#10C98B]/20' },
+    { id: 'circularlinkedlist', name: 'Circular LinkedList', desc: 'Circular Tail-to-Head Loop', icon: RefreshCcw, color: 'text-[#06B6D4] bg-[#06B6D4]/10 border border-[#06B6D4]/20' },
+    { id: 'stack', name: 'Stack', desc: 'LIFO Vertical Array', icon: Layers, color: 'text-[#3B82F6] bg-[#3B82F6]/10 border border-[#3B82F6]/20' },
+    { id: 'queue', name: 'Queue', desc: 'FIFO Front/Rear Line', icon: ListFilter, color: 'text-[#8B5CF6] bg-[#8B5CF6]/10 border border-[#8B5CF6]/20' },
+    { id: 'deque', name: 'Deque', desc: 'Double-Ended Queue', icon: ArrowLeftRight, color: 'text-[#D946EF] bg-[#D946EF]/10 border border-[#D946EF]/20' },
+    { id: 'priorityqueue', name: 'PriorityQueue', desc: 'Binary Min-Heap Array', icon: ArrowUp10, color: 'text-[#F97316] bg-[#F97316]/10 border border-[#F97316]/20' },
+    { id: 'hashmap', name: 'HashMap', desc: 'Chaining & Load Factor', icon: Grid, color: 'text-[#EC4899] bg-[#EC4899]/10 border border-[#EC4899]/20' },
+    { id: 'hashset', name: 'HashSet', desc: 'Unique Bucket Table', icon: Hash, color: 'text-[#F43F5E] bg-[#F43F5E]/10 border border-[#F43F5E]/20' },
+    { id: 'treemap', name: 'TreeMap', desc: 'Red-Black BST & Search', icon: GitFork, color: 'text-[#F59E0B] bg-[#F59E0B]/10 border border-[#F59E0B]/20' },
+    { id: 'bst', name: 'Binary Search Tree', desc: 'BST Node Hierarchy', icon: GitFork, color: 'text-[#6366F1] bg-[#6366F1]/10 border border-[#6366F1]/20' },
+    { id: 'heap', name: 'Min Heap', desc: 'Binary Min-Heap Tree', icon: ArrowUp10, color: 'text-[#14B8A6] bg-[#14B8A6]/10 border border-[#14B8A6]/20' },
+    { id: 'trie', name: 'Trie', desc: 'Prefix Tree & Autocomplete', icon: Network, color: 'text-[#0EA5E9] bg-[#0EA5E9]/10 border border-[#0EA5E9]/20' },
+    { id: 'graph', name: 'Graph', desc: 'Adjacency List & BFS/DFS', icon: Network, color: 'text-[#EF4444] bg-[#EF4444]/10 border border-[#EF4444]/20' },
+    { id: 'disjointset', name: 'Disjoint Set', desc: 'Union-Find & Path Compression', icon: GitBranch, color: 'text-[#10B981] bg-[#10B981]/10 border border-[#10B981]/20' }
   ];
 
   const searchItems = [
