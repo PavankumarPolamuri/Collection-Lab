@@ -14,7 +14,7 @@ import { ContactPage } from './components/pages/ContactPage';
 import type { OperationHistoryItem } from './types/collections';
 
 export function App() {
-  const [currentTab, setCurrentTab] = useState<string>('landing');
+  const [currentTab, setCurrentTab] = useState<string>('arraylist');
   const [codeModalOpen, setCodeModalOpen] = useState<boolean>(false);
   const [codeCollection, setCodeCollection] = useState<string>('ArrayList');
   const [history, setHistory] = useState<OperationHistoryItem[]>([]);
@@ -24,8 +24,14 @@ export function App() {
   }, []);
 
   const handleOpenCodeViewer = (colId?: string) => {
-    const target = colId || (['arraylist', 'linkedlist', 'hashmap', 'treemap', 'priorityqueue'].includes(currentTab) ? currentTab : 'arraylist');
-    const formatted = target.charAt(0).toUpperCase() + target.slice(1);
+    const raw = (colId || (['arraylist', 'linkedlist', 'hashmap', 'treemap', 'priorityqueue'].includes(currentTab) ? currentTab : 'arraylist')).toLowerCase();
+    let formatted = 'ArrayList';
+    if (raw === 'linkedlist') formatted = 'LinkedList';
+    else if (raw === 'hashmap') formatted = 'HashMap';
+    else if (raw === 'treemap') formatted = 'TreeMap';
+    else if (raw === 'priorityqueue') formatted = 'PriorityQueue';
+    else if (raw === 'arraylist') formatted = 'ArrayList';
+
     setCodeCollection(formatted);
     setCodeModalOpen(true);
   };
