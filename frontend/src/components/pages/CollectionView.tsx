@@ -82,43 +82,47 @@ export const CollectionView: React.FC<CollectionViewProps> = ({
     try {
       let res: OperationResponse | null = null;
 
+      const targetValue = (params.value !== undefined && params.value !== '') ? params.value : '10';
+      const targetKey = (params.key !== undefined && params.key !== '') ? params.key : 'Key1';
+      const targetIndex = (params.index !== undefined && !isNaN(params.index)) ? params.index : 0;
+
       if (collectionId === 'arraylist') {
-        if (op === 'ADD') res = await api.addArrayList(params.value || '');
-        else if (op === 'ADD_AT') res = await api.addAtArrayList(params.index || 0, params.value || '');
-        else if (op === 'GET') res = await api.getArrayListItem(params.index || 0);
-        else if (op === 'SET') res = await api.setArrayListItem(params.index || 0, params.value || '');
-        else if (op === 'CONTAINS') res = await api.containsArrayList(params.value || '');
-        else if (op === 'INDEX_OF') res = await api.indexOfArrayList(params.value || '');
-        else if (op === 'REMOVE') res = await api.removeArrayListItem(params.index || 0);
-        else if (op === 'REMOVE_BY_VALUE') res = await api.removeValueArrayList(params.value || '');
+        if (op === 'ADD') res = await api.addArrayList(targetValue);
+        else if (op === 'ADD_AT') res = await api.addAtArrayList(targetIndex, targetValue);
+        else if (op === 'GET') res = await api.getArrayListItem(targetIndex);
+        else if (op === 'SET') res = await api.setArrayListItem(targetIndex, targetValue);
+        else if (op === 'CONTAINS') res = await api.containsArrayList(targetValue);
+        else if (op === 'INDEX_OF') res = await api.indexOfArrayList(targetValue);
+        else if (op === 'REMOVE') res = await api.removeArrayListItem(targetIndex);
+        else if (op === 'REMOVE_BY_VALUE') res = await api.removeValueArrayList(targetValue);
       } else if (collectionId === 'linkedlist') {
-        if (op === 'ADD_FIRST') res = await api.addFirstLinkedList(params.value || '');
-        else if (op === 'ADD_LAST') res = await api.addLastLinkedList(params.value || '');
-        else if (op === 'ADD_AT') res = await api.addAtLinkedList(params.index || 0, params.value || '');
-        else if (op === 'GET') res = await api.getLinkedListNode(params.index || 0);
-        else if (op === 'SET') res = await api.setLinkedListNode(params.index || 0, params.value || '');
-        else if (op === 'CONTAINS') res = await api.containsLinkedList(params.value || '');
-        else if (op === 'INDEX_OF') res = await api.indexOfLinkedList(params.value || '');
+        if (op === 'ADD_FIRST') res = await api.addFirstLinkedList(targetValue);
+        else if (op === 'ADD_LAST') res = await api.addLastLinkedList(targetValue);
+        else if (op === 'ADD_AT') res = await api.addAtLinkedList(targetIndex, targetValue);
+        else if (op === 'GET') res = await api.getLinkedListNode(targetIndex);
+        else if (op === 'SET') res = await api.setLinkedListNode(targetIndex, targetValue);
+        else if (op === 'CONTAINS') res = await api.containsLinkedList(targetValue);
+        else if (op === 'INDEX_OF') res = await api.indexOfLinkedList(targetValue);
         else if (op === 'REMOVE_FIRST') res = await api.removeFirstLinkedList();
         else if (op === 'REMOVE_LAST') res = await api.removeLastLinkedList();
-        else if (op === 'REMOVE') res = await api.removeLinkedListNode(params.index || 0);
-        else if (op === 'REMOVE_BY_VALUE') res = await api.removeValueLinkedList(params.value || '');
+        else if (op === 'REMOVE') res = await api.removeLinkedListNode(targetIndex);
+        else if (op === 'REMOVE_BY_VALUE') res = await api.removeValueArrayList(targetValue);
       } else if (collectionId === 'hashmap') {
-        if (op === 'PUT') res = await api.putHashMap(params.key || '', params.value || '');
-        else if (op === 'GET') res = await api.getHashMapValue(params.key || '');
-        else if (op === 'CONTAINS_KEY') res = await api.containsKeyHashMap(params.key || '');
-        else if (op === 'CONTAINS_VALUE') res = await api.containsValueHashMap(params.value || '');
-        else if (op === 'REMOVE') res = await api.removeHashMapKey(params.key || '');
+        if (op === 'PUT') res = await api.putHashMap(targetKey, targetValue);
+        else if (op === 'GET') res = await api.getHashMapValue(targetKey);
+        else if (op === 'CONTAINS_KEY') res = await api.containsKeyHashMap(targetKey);
+        else if (op === 'CONTAINS_VALUE') res = await api.containsValueHashMap(targetValue);
+        else if (op === 'REMOVE') res = await api.removeHashMapKey(targetKey);
       } else if (collectionId === 'treemap') {
-        if (op === 'PUT') res = await api.putTreeMap(params.key || '', params.value || '');
-        else if (op === 'GET') res = await api.getTreeMapValue(params.key || '');
-        else if (op === 'CONTAINS_KEY') res = await api.containsKeyTreeMap(params.key || '');
+        if (op === 'PUT') res = await api.putTreeMap(targetKey, targetValue);
+        else if (op === 'GET') res = await api.getTreeMapValue(targetKey);
+        else if (op === 'CONTAINS_KEY') res = await api.containsKeyTreeMap(targetKey);
         else if (op === 'FIRST_KEY') res = await api.getFirstKeyTreeMap();
         else if (op === 'LAST_KEY') res = await api.getLastKeyTreeMap();
-        else if (op === 'REMOVE') res = await api.removeTreeMapKey(params.key || '');
+        else if (op === 'REMOVE') res = await api.removeTreeMapKey(targetKey);
         else if (op === 'TRAVERSAL') res = await api.getTreeMapTraversal((params.type as any) || 'inorder');
       } else if (collectionId === 'priorityqueue') {
-        if (op === 'OFFER') res = await api.offerPriorityQueue(params.value || '');
+        if (op === 'OFFER') res = await api.offerPriorityQueue(targetValue);
         else if (op === 'PEEK') res = await api.peekPriorityQueue();
         else if (op === 'POLL') res = await api.pollPriorityQueue();
       }

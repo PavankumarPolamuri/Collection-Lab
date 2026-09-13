@@ -23,7 +23,9 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   const handleSubmit = (e: React.FormEvent, op: string) => {
     e.preventDefault();
     if (loading) return;
-    onExecute(op, { value, key, index, type: traversalType });
+    const finalValue = value.trim() !== '' ? value.trim() : '10';
+    const finalKey = key.trim() !== '' ? key.trim() : 'Key1';
+    onExecute(op, { value: finalValue, key: finalKey, index: index >= 0 ? index : 0, type: traversalType });
   };
 
   return (
@@ -73,7 +75,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'ADD')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> Add (Append)
@@ -81,7 +83,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'ADD_AT')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Insert At Index
@@ -97,7 +99,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'SET')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               title="Replace element at index with new value"
             >
@@ -106,7 +108,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'CONTAINS')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Contains Value
@@ -114,7 +116,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'INDEX_OF')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Index Of Value
@@ -130,7 +132,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE_BY_VALUE')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> Remove By Value
@@ -169,7 +171,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'ADD_FIRST')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> Add First (HEAD)
@@ -177,7 +179,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'ADD_LAST')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> Add Last (TAIL)
@@ -185,7 +187,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'ADD_AT')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Insert At Index
@@ -202,7 +204,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'SET')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Set At Index
@@ -210,7 +212,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'CONTAINS')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Contains Value
@@ -218,7 +220,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'INDEX_OF')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Index Of Value
@@ -251,7 +253,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE_BY_VALUE')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> Remove By Value
@@ -294,7 +296,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'PUT')}
-              disabled={loading || !key || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-emerald-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> PUT (Insert / Update)
@@ -302,7 +304,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'GET')}
-              disabled={loading || !key}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> GET Value
@@ -310,7 +312,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'CONTAINS_KEY')}
-              disabled={loading || !key}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Contains Key
@@ -318,7 +320,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'CONTAINS_VALUE')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Contains Value
@@ -326,7 +328,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE')}
-              disabled={loading || !key}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> REMOVE Key
@@ -365,7 +367,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'PUT')}
-              disabled={loading || !key}
+              disabled={loading}
               className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> PUT Node
@@ -373,7 +375,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'GET')}
-              disabled={loading || !key}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> GET Node
@@ -381,7 +383,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'CONTAINS_KEY')}
-              disabled={loading || !key}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Contains Key
@@ -405,7 +407,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE')}
-              disabled={loading || !key}
+              disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> REMOVE Node
@@ -452,7 +454,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <button
               type="button"
               onClick={(e) => handleSubmit(e, 'OFFER')}
-              disabled={loading || !value}
+              disabled={loading}
               className="flex items-center gap-1.5 px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-amber-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> OFFER (Insert & Sift Up)
