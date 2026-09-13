@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Box, Home, Layers, BookOpen, BarChart2, Info, Mail, Search,
-  ChevronDown, Menu, X, GitCommit, Grid, GitFork, ArrowUp10
+  ChevronDown, Menu, X, GitCommit, Grid, GitFork, ArrowUp10,
+  RefreshCcw, ArrowLeftRight, ListFilter, Hash, Network, GitBranch
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -24,19 +25,25 @@ export const Navbar: React.FC<NavbarProps> = ({
   const searchRef = useRef<HTMLDivElement>(null);
 
   const collections = [
-    { id: 'arraylist', name: 'ArrayList', desc: 'Dynamic Array & Resizing', icon: Layers, color: 'text-[#FF6B00] bg-orange-500/10' },
-    { id: 'linkedlist', name: 'LinkedList', desc: 'Doubly Linked Node Chain', icon: GitCommit, color: 'text-[#10C98B] bg-emerald-500/10' },
-    { id: 'hashmap', name: 'HashMap', desc: 'Separate Chaining & Rehashing', icon: Grid, color: 'text-[#7C3AED] bg-purple-500/10' },
-    { id: 'treemap', name: 'TreeMap', desc: 'Binary Search Tree & Traversals', icon: GitFork, color: 'text-[#F59E0B] bg-amber-500/10' },
-    { id: 'priorityqueue', name: 'PriorityQueue', desc: 'Binary Min-Heap Array', icon: ArrowUp10, color: 'text-[#EC4899] bg-pink-500/10' }
+    { id: 'arraylist', name: 'ArrayList', desc: 'Dynamic Array & Resizing', icon: Layers, color: 'text-blue-400 bg-blue-500/10' },
+    { id: 'linkedlist', name: 'LinkedList', desc: 'Doubly Linked Node Chain', icon: GitCommit, color: 'text-emerald-400 bg-emerald-500/10' },
+    { id: 'circularlinkedlist', name: 'Circular LinkedList', desc: 'Circular Tail-to-Head Loop', icon: RefreshCcw, color: 'text-indigo-400 bg-indigo-500/10' },
+    { id: 'stack', name: 'Stack', desc: 'LIFO Vertical Array', icon: Layers, color: 'text-indigo-400 bg-indigo-500/10' },
+    { id: 'queue', name: 'Queue', desc: 'FIFO Front/Rear Line', icon: ListFilter, color: 'text-blue-400 bg-blue-500/10' },
+    { id: 'deque', name: 'Deque', desc: 'Double-Ended Queue', icon: ArrowLeftRight, color: 'text-violet-400 bg-violet-500/10' },
+    { id: 'priorityqueue', name: 'PriorityQueue', desc: 'Binary Min-Heap Array', icon: ArrowUp10, color: 'text-pink-400 bg-pink-500/10' },
+    { id: 'hashmap', name: 'HashMap', desc: 'Chaining & Load Factor', icon: Grid, color: 'text-purple-400 bg-purple-500/10' },
+    { id: 'hashset', name: 'HashSet', desc: 'Unique Bucket Table', icon: Hash, color: 'text-emerald-400 bg-emerald-500/10' },
+    { id: 'treemap', name: 'TreeMap', desc: 'Red-Black BST & Search', icon: GitFork, color: 'text-amber-400 bg-amber-500/10' },
+    { id: 'bst', name: 'Binary Search Tree', desc: 'BST Node Hierarchy', icon: GitFork, color: 'text-indigo-400 bg-indigo-500/10' },
+    { id: 'heap', name: 'Min Heap', desc: 'Binary Min-Heap Tree', icon: ArrowUp10, color: 'text-amber-400 bg-amber-500/10' },
+    { id: 'trie', name: 'Trie', desc: 'Prefix Tree & Autocomplete', icon: Network, color: 'text-indigo-400 bg-indigo-500/10' },
+    { id: 'graph', name: 'Graph', desc: 'Adjacency List & BFS/DFS', icon: Network, color: 'text-sky-400 bg-sky-500/10' },
+    { id: 'disjointset', name: 'Disjoint Set', desc: 'Union-Find & Path Compression', icon: GitBranch, color: 'text-emerald-400 bg-emerald-500/10' }
   ];
 
   const searchItems = [
-    { id: 'arraylist', name: 'ArrayList Visualizer', category: 'Collection' },
-    { id: 'linkedlist', name: 'LinkedList Visualizer', category: 'Collection' },
-    { id: 'hashmap', name: 'HashMap Visualizer', category: 'Collection' },
-    { id: 'treemap', name: 'TreeMap Visualizer', category: 'Collection' },
-    { id: 'priorityqueue', name: 'PriorityQueue Visualizer', category: 'Collection' },
+    ...collections.map(c => ({ id: c.id, name: `${c.name} Visualizer`, category: 'Collection' })),
     { id: 'learning', name: 'Interactive Learning Walkthroughs', category: 'Guide' },
     { id: 'benchmark', name: 'JVM Performance Benchmark Test', category: 'Tool' },
     { id: 'about', name: 'About & System Architecture', category: 'Info' },
@@ -60,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const isCollectionActive = ['arraylist', 'linkedlist', 'hashmap', 'treemap', 'priorityqueue'].includes(currentTab);
+  const isCollectionActive = collections.some(c => c.id === currentTab);
 
   return (
     <header className="sticky top-0 z-50 bg-[#0D1424]/95 backdrop-blur-md border-b border-white/10 transition-colors shadow-lg">
@@ -83,7 +90,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="text-[#FF6B00]">Lab</span>
             </div>
             <span className="text-[10px] text-[#A7B3C7] hidden lg:block mt-0.5 font-sans font-medium">
-              Custom Java Collections Visualizer
+              15 Custom Java DSA Visualizers
             </span>
           </div>
         </div>
@@ -94,7 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Home */}
           <button
             onClick={() => onSelectTab('home')}
-            className={`flex items-center gap-1.5 transition-all ${
+            className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'home' || currentTab === 'landing'
                 ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-semibold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
@@ -108,21 +115,21 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setCollectionsOpen(!collectionsOpen)}
-              className={`flex items-center gap-1.5 transition-all ${
+              className={`flex items-center gap-1.5 transition-all cursor-pointer ${
                 isCollectionActive
                   ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-semibold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
                   : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
               }`}
             >
               <Layers className="w-4 h-4" />
-              <span>Collections</span>
+              <span>Collections ({collections.length})</span>
               <ChevronDown className={`w-3.5 h-3.5 transition-transform ${collectionsOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {collectionsOpen && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-[#10182A] border border-white/10 rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2">
-                <div className="text-[10px] font-mono font-medium text-[#718096] px-3 py-1 uppercase tracking-wider">
-                  Select Visualizer
+              <div className="absolute top-full left-0 mt-2 w-80 max-h-[480px] overflow-y-auto bg-[#10182A] border border-white/10 rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 space-y-1">
+                <div className="text-[10px] font-mono font-bold text-[#718096] px-3 py-1 uppercase tracking-wider sticky top-0 bg-[#10182A] border-b border-white/5 z-10">
+                  All 15 DSA Visualizers
                 </div>
                 {collections.map((col) => {
                   const Icon = col.icon;
@@ -133,7 +140,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         onSelectTab(col.id);
                         setCollectionsOpen(false);
                       }}
-                      className={`flex items-center gap-3 w-full p-2.5 rounded-xl text-left transition-colors ${
+                      className={`flex items-center gap-3 w-full p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
                         currentTab === col.id
                           ? 'bg-orange-500/15 border border-orange-500/30'
                           : 'hover:bg-[#121C30]'
@@ -156,7 +163,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Learning */}
           <button
             onClick={() => onSelectTab('learning')}
-            className={`flex items-center gap-1.5 transition-all ${
+            className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'learning'
                 ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
@@ -169,7 +176,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Benchmark */}
           <button
             onClick={() => onSelectTab('benchmark')}
-            className={`flex items-center gap-1.5 transition-all ${
+            className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'benchmark'
                 ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
@@ -182,7 +189,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* About */}
           <button
             onClick={() => onSelectTab('about')}
-            className={`flex items-center gap-1.5 transition-all ${
+            className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'about'
                 ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
@@ -195,7 +202,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Contact */}
           <button
             onClick={() => onSelectTab('contact')}
-            className={`flex items-center gap-1.5 transition-all ${
+            className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'contact'
                 ? 'text-[#FF6B00] bg-[#FF6B00]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#FF6B00]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
@@ -206,10 +213,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </nav>
 
-        {/* RIGHT CONTROLS: EXPANDED SEARCH BAR & VIEW SOURCE BUTTON */}
+        {/* RIGHT CONTROLS: SEARCH & VIEW SOURCE */}
         <div className="flex items-center gap-3">
-          
-          {/* Expanded Search Input */}
           <div className="relative hidden sm:block" ref={searchRef}>
             <div className="relative">
               <Search className="w-3.5 h-3.5 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#718096]" />
@@ -222,12 +227,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }}
                 onFocus={() => setSearchOpen(true)}
                 placeholder="Search collections..."
-                className="w-56 sm:w-64 lg:w-72 xl:w-80 bg-[#10182A] border border-white/10 rounded-full pl-9 pr-4 py-1.5 text-xs text-white placeholder:text-[#718096] focus:outline-none focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]/50 transition-all font-sans"
+                className="w-56 sm:w-64 lg:w-72 bg-[#10182A] border border-white/10 rounded-full pl-9 pr-4 py-1.5 text-xs text-white placeholder:text-[#718096] focus:outline-none focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]/50 transition-all font-sans"
               />
             </div>
 
             {searchOpen && filteredSearch.length > 0 && (
-              <div className="absolute top-full right-0 mt-2 w-72 bg-[#10182A] border border-white/10 rounded-2xl shadow-2xl p-2 z-50">
+              <div className="absolute top-full right-0 mt-2 w-72 max-h-[360px] overflow-y-auto bg-[#10182A] border border-white/10 rounded-2xl shadow-2xl p-2 z-50">
                 <div className="text-[10px] font-mono font-bold text-[#718096] px-3 py-1 uppercase">
                   Search Results ({filteredSearch.length})
                 </div>
@@ -239,7 +244,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       setSearchQuery('');
                       setSearchOpen(false);
                     }}
-                    className="flex items-center justify-between w-full px-3 py-2 rounded-xl text-left text-xs hover:bg-[#121C30] transition-colors"
+                    className="flex items-center justify-between w-full px-3 py-2 rounded-xl text-left text-xs hover:bg-[#121C30] transition-colors cursor-pointer"
                   >
                     <span className="font-medium text-white">{item.name}</span>
                     <span className="text-[9px] font-mono px-1.5 py-0.5 bg-orange-500/20 text-[#FF6B00] rounded border border-orange-500/30">
@@ -251,10 +256,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </div>
 
-          {/* Sunset Orange Pill Button "View Source Code" */}
           <button
             onClick={() => onOpenCodeViewer()}
-            className="flex items-center gap-2 px-4 py-2 bg-[#FF6B00] hover:bg-[#EA580C] text-white rounded-full text-xs font-bold shadow-md shadow-orange-500/20 transition-all shrink-0"
+            className="flex items-center gap-2 px-4 py-2 bg-[#FF6B00] hover:bg-[#EA580C] text-white rounded-full text-xs font-bold shadow-md shadow-orange-500/20 transition-all shrink-0 cursor-pointer"
             title="Inspect Real Java Backend Source Code"
           >
             <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -263,86 +267,30 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="hidden sm:inline">View Source Code</span>
           </button>
 
-          {/* Mobile Hamburger Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 md:hidden bg-[#10182A] text-slate-300 rounded-xl border border-white/10"
+            className="p-2 md:hidden bg-[#10182A] text-slate-300 rounded-xl border border-white/10 cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* MOBILE NAVIGATION DRAWER */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-white/10 bg-[#0D1424] p-4 space-y-3 font-sans animate-in slide-in-from-top">
+        <div className="md:hidden border-t border-white/10 bg-[#0D1424] p-4 space-y-3 font-sans animate-in slide-in-from-top max-h-[80vh] overflow-y-auto">
           <div className="space-y-1">
-            <button
-              onClick={() => {
-                onSelectTab('home');
-                setMobileMenuOpen(false);
-              }}
-              className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-white hover:bg-[#10182A]"
-            >
+            <button onClick={() => { onSelectTab('home'); setMobileMenuOpen(false); }} className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-white hover:bg-[#10182A]">
               Home
             </button>
-
             <div className="px-3 py-1 text-[10px] font-mono font-bold text-[#718096] uppercase">
-              Collections
+              All 15 Collections
             </div>
             {collections.map(col => (
-              <button
-                key={col.id}
-                onClick={() => {
-                  onSelectTab(col.id);
-                  setMobileMenuOpen(false);
-                }}
-                className="w-full text-left px-4 py-2 rounded-lg text-xs text-[#A7B3C7] hover:bg-[#10182A] flex items-center justify-between"
-              >
+              <button key={col.id} onClick={() => { onSelectTab(col.id); setMobileMenuOpen(false); }} className="w-full text-left px-4 py-2 rounded-lg text-xs text-[#A7B3C7] hover:bg-[#10182A] flex items-center justify-between">
                 <span className="font-semibold text-white">{col.name}</span>
                 <span className="text-[10px] font-mono text-[#718096]">{col.desc}</span>
               </button>
             ))}
-
-            <button
-              onClick={() => {
-                onSelectTab('learning');
-                setMobileMenuOpen(false);
-              }}
-              className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-white hover:bg-[#10182A]"
-            >
-              Learning
-            </button>
-
-            <button
-              onClick={() => {
-                onSelectTab('benchmark');
-                setMobileMenuOpen(false);
-              }}
-              className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-white hover:bg-[#10182A]"
-            >
-              Benchmark
-            </button>
-
-            <button
-              onClick={() => {
-                onSelectTab('about');
-                setMobileMenuOpen(false);
-              }}
-              className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-white hover:bg-[#10182A]"
-            >
-              About
-            </button>
-
-            <button
-              onClick={() => {
-                onSelectTab('contact');
-                setMobileMenuOpen(false);
-              }}
-              className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-white hover:bg-[#10182A]"
-            >
-              Contact
-            </button>
           </div>
         </div>
       )}

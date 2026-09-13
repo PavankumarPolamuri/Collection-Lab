@@ -23,20 +23,35 @@ export function App() {
     document.documentElement.classList.add('dark');
   }, []);
 
+  const collectionIds = [
+    'arraylist', 'linkedlist', 'hashmap', 'treemap', 'priorityqueue',
+    'stack', 'queue', 'deque', 'hashset', 'bst', 'heap', 'minheap',
+    'trie', 'graph', 'disjointset', 'unionfind', 'circularlinkedlist'
+  ];
+
   const handleOpenCodeViewer = (colId?: string) => {
-    const raw = (colId || (['arraylist', 'linkedlist', 'hashmap', 'treemap', 'priorityqueue'].includes(currentTab) ? currentTab : 'arraylist')).toLowerCase();
+    const raw = (colId || (collectionIds.includes(currentTab) ? currentTab : 'arraylist')).toLowerCase().replaceAll(/[^a-z]/g, '');
     let formatted = 'ArrayList';
     if (raw === 'linkedlist') formatted = 'LinkedList';
     else if (raw === 'hashmap') formatted = 'HashMap';
     else if (raw === 'treemap') formatted = 'TreeMap';
     else if (raw === 'priorityqueue') formatted = 'PriorityQueue';
-    else if (raw === 'arraylist') formatted = 'ArrayList';
+    else if (raw === 'stack') formatted = 'Stack';
+    else if (raw === 'queue') formatted = 'Queue';
+    else if (raw === 'deque') formatted = 'Deque';
+    else if (raw === 'hashset') formatted = 'HashSet';
+    else if (raw === 'bst') formatted = 'BST';
+    else if (raw === 'heap' || raw === 'minheap') formatted = 'MinHeap';
+    else if (raw === 'trie') formatted = 'Trie';
+    else if (raw === 'graph') formatted = 'Graph';
+    else if (raw === 'disjointset' || raw === 'unionfind') formatted = 'DisjointSet';
+    else if (raw === 'circularlinkedlist') formatted = 'CircularLinkedList';
 
     setCodeCollection(formatted);
     setCodeModalOpen(true);
   };
 
-  const isCollectionTab = ['arraylist', 'linkedlist', 'hashmap', 'treemap', 'priorityqueue'].includes(currentTab);
+  const isCollectionTab = collectionIds.includes(currentTab);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#080D18] text-white font-sans selection:bg-[#FF6B00]/30 selection:text-orange-200">

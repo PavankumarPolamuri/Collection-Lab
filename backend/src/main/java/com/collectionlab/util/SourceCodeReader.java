@@ -14,13 +14,25 @@ public class SourceCodeReader {
 
     public String getCanonicalCollectionName(String collectionName) {
         if (collectionName == null || collectionName.isBlank()) return "";
-        String lower = collectionName.toLowerCase();
+        String lower = collectionName.toLowerCase().replaceAll("[^a-z]", "");
         switch (lower) {
             case "arraylist": return "ArrayList";
             case "linkedlist": return "LinkedList";
             case "hashmap": return "HashMap";
             case "treemap": return "TreeMap";
             case "priorityqueue": return "PriorityQueue";
+            case "stack": return "Stack";
+            case "queue": return "Queue";
+            case "deque": return "Deque";
+            case "hashset": return "HashSet";
+            case "bst": return "BST";
+            case "minheap":
+            case "heap": return "MinHeap";
+            case "trie": return "Trie";
+            case "graph": return "Graph";
+            case "disjointset":
+            case "unionfind": return "DisjointSet";
+            case "circularlinkedlist": return "CircularLinkedList";
             default:
                 return collectionName.substring(0, 1).toUpperCase() + collectionName.substring(1);
         }
