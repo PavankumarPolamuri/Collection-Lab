@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Search, Trash2, RotateCcw, ArrowDownUp, RefreshCw, Key, Hash } from 'lucide-react';
+import { Plus, Search, Trash2, RotateCcw, ArrowDownUp, RefreshCw, Key, Hash, Edit3 } from 'lucide-react';
 import type { CollectionType } from '../../types/collections';
 
 interface ControlPanelProps {
@@ -21,26 +21,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   const [traversalType, setTraversalType] = useState<'inorder' | 'preorder' | 'postorder'>('inorder');
   const [validationError, setValidationError] = useState<string | null>(null);
 
-  const handleAddSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (loading) return;
-    const trimmed = value.trim();
-    if (!trimmed) {
-      setValidationError('Please enter a value.');
-      return;
-    }
-    setValidationError(null);
-    onExecute('ADD', { value: trimmed });
-    setValue(''); // Auto-clear input field after adding so user can immediately type next value
-  };
-
-  const handleOtherSubmit = (e: React.FormEvent, op: string) => {
-    e.preventDefault();
-    if (loading) return;
-    onExecute(op, { value, key, index, type: traversalType });
-  };
-  const handleSubmit = handleOtherSubmit;
-
   const normalizedType = collectionType ? String(collectionType).toUpperCase().replace(/-/g, '_') : 'ARRAY_LIST';
   const isArrayList = normalizedType === 'ARRAY_LIST' || normalizedType === 'ARRAYLIST';
   const isLinkedList = normalizedType === 'LINKED_LIST' || normalizedType === 'LINKEDLIST';
@@ -48,8 +28,70 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   const isTreeMap = normalizedType === 'TREE_MAP' || normalizedType === 'TREEMAP';
   const isPriorityQueue = normalizedType === 'PRIORITY_QUEUE' || normalizedType === 'PRIORITYQUEUE';
 
+  const clearError = () => {
+    if (validationError) setValidationError(null);
+  };
+
+  const executeOp = (op: string) => {
+    if (loading) return;
+    const trimmedVal = value.trim();
+    const trimmedKey = key.trim();
+
+    // Input Validation per operation
+    if (isArrayList || isLinkedList) {
+      if (['ADD', 'ADD_FIRST', 'ADD_LAST', 'CONTAINS', 'INDEX_OF', 'REMOVE_BY_VALUE'].includes(op)) {
+        if (!trimmedVal) {
+          setValidationError('Please enter a value.');
+          return;
+        }
+      } else if (['ADD_AT', 'SET'].includes(op)) {
+        if (index < 0 || isNaN(index)) {
+          setValidationError('Invalid index.');
+          return;
+        }
+        if (!trimmedVal) {
+          setValidationError('Please enter a value.');
+          return;
+        }
+      } else if (['GET', 'REMOVE'].includes(op)) {
+        if (index < 0 || isNaN(index)) {
+          setValidationError('Invalid index.');
+          return;
+        }
+      }
+    } else if (isHashMap || isTreeMap) {
+      if (['PUT', 'GET', 'CONTAINS_KEY', 'REMOVE'].includes(op)) {
+        if (!trimmedKey) {
+          setValidationError('Please enter a key.');
+          return;
+        }
+      } else if (op === 'CONTAINS_VALUE') {
+        if (!trimmedVal) {
+          setValidationError('Please enter a value.');
+          return;
+        }
+      }
+    } else if (isPriorityQueue) {
+      if (op === 'OFFER') {
+        if (!trimmedVal) {
+          setValidationError('Please enter a value.');
+          return;
+        }
+      }
+    }
+
+    setValidationError(null);
+    onExecute(op, { value: trimmedVal, key: trimmedKey, index, type: traversalType });
+
+    // Auto-clear value field after Add/Offer operations for convenient typing
+    if (['ADD', 'ADD_FIRST', 'ADD_LAST', 'OFFER'].includes(op)) {
+      setValue('');
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm dark:shadow-xl space-y-4 transition-colors">
+      {/* Header with Title and Reset Button */}
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
         <h3 className="text-xs font-mono font-medium tracking-wider uppercase text-slate-500 dark:text-slate-400 flex items-center gap-2">
           <ArrowDownUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -66,44 +108,120 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
         </button>
       </div>
 
-      {/* ARRAY LIST CONTROLS */}
+      {/* Validation Error Banner */}
+      {validationError && (
+        <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-xs font-mono text-rose-400 flex items-center gap-2">
+          <span>⚠️ {validationError}</span>
+        </div>
+      )}
+
+      {/* CUSTOM ARRAYLIST CONTROLS */}
       {isArrayList && (
-        <form onSubmit={handleAddSubmit} className="space-y-3">
-          <div className="space-y-1.5">
-            <label className="block text-xs font-mono font-medium text-slate-400">
-              Enter element/value
-            </label>
-            <div className="flex flex-col sm:flex-row gap-2.5">
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-medium text-slate-400 mb-1">
+                Element / Value
+              </label>
               <input
                 type="text"
                 value={value}
                 onChange={(e) => {
                   setValue(e.target.value);
-                  if (validationError) setValidationError(null);
+                  clearError();
                 }}
-                className="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-indigo-500 transition-colors"
-                placeholder="Enter element/value (e.g. 10, Pavan, Java)..."
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-indigo-500 transition-colors"
+                placeholder="Enter value (e.g. 10, Pavan, Java)..."
                 autoFocus
               />
-              <button
-                type="submit"
-                disabled={loading}
-                className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/20 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
-              >
-                <Plus className="w-4 h-4" />
-                <span>ADD</span>
-              </button>
             </div>
-            {validationError && (
-              <p className="text-xs text-rose-400 font-mono mt-1 flex items-center gap-1">
-                ⚠️ {validationError}
-              </p>
-            )}
+            <div>
+              <label className="block text-xs font-medium text-slate-400 mb-1">
+                Index (For Insert / Get / Edit / Remove)
+              </label>
+              <input
+                type="number"
+                value={index}
+                onChange={(e) => {
+                  setIndex(parseInt(e.target.value) || 0);
+                  clearError();
+                }}
+                min="0"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-indigo-500 transition-colors"
+              />
+            </div>
           </div>
-        </form>
+
+          <div className="flex flex-wrap gap-2 pt-1">
+            <button
+              type="button"
+              onClick={() => executeOp('ADD')}
+              disabled={loading}
+              className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Plus className="w-3.5 h-3.5" /> ADD (Append)
+            </button>
+            <button
+              type="button"
+              onClick={() => executeOp('ADD_AT')}
+              disabled={loading}
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Plus className="w-3.5 h-3.5" /> Insert At Index
+            </button>
+            <button
+              type="button"
+              onClick={() => executeOp('GET')}
+              disabled={loading}
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Search className="w-3.5 h-3.5" /> Get At Index
+            </button>
+            <button
+              type="button"
+              onClick={() => executeOp('SET')}
+              disabled={loading}
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Edit3 className="w-3.5 h-3.5" /> Edit / Set At Index
+            </button>
+            <button
+              type="button"
+              onClick={() => executeOp('CONTAINS')}
+              disabled={loading}
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Search className="w-3.5 h-3.5" /> Contains Value
+            </button>
+            <button
+              type="button"
+              onClick={() => executeOp('INDEX_OF')}
+              disabled={loading}
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Index Of Value
+            </button>
+            <button
+              type="button"
+              onClick={() => executeOp('REMOVE')}
+              disabled={loading}
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Trash2 className="w-3.5 h-3.5" /> Remove At Index
+            </button>
+            <button
+              type="button"
+              onClick={() => executeOp('REMOVE_BY_VALUE')}
+              disabled={loading}
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Trash2 className="w-3.5 h-3.5" /> Remove By Value
+            </button>
+          </div>
+        </div>
       )}
 
-      {/* LINKED LIST CONTROLS */}
+      {/* CUSTOM LINKEDLIST CONTROLS */}
       {isLinkedList && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -112,7 +230,10 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <input
                 type="text"
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => {
+                  setValue(e.target.value);
+                  clearError();
+                }}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="Enter node data..."
               />
@@ -122,17 +243,20 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <input
                 type="number"
                 value={index}
-                onChange={(e) => setIndex(parseInt(e.target.value) || 0)}
+                onChange={(e) => {
+                  setIndex(parseInt(e.target.value) || 0);
+                  clearError();
+                }}
                 min="0"
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-blue-500 transition-colors"
               />
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-2 pt-1">
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'ADD_FIRST')}
+              onClick={() => executeOp('ADD_FIRST')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -140,7 +264,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'ADD_LAST')}
+              onClick={() => executeOp('ADD_LAST')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -148,7 +272,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'ADD_AT')}
+              onClick={() => executeOp('ADD_AT')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -157,7 +281,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'GET')}
+              onClick={() => executeOp('GET')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -165,15 +289,15 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'SET')}
+              onClick={() => executeOp('SET')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Set At Index
+              <Edit3 className="w-3.5 h-3.5" /> Set At Index
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'CONTAINS')}
+              onClick={() => executeOp('CONTAINS')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -181,7 +305,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'INDEX_OF')}
+              onClick={() => executeOp('INDEX_OF')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -190,7 +314,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'REMOVE_FIRST')}
+              onClick={() => executeOp('REMOVE_FIRST')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -198,7 +322,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'REMOVE_LAST')}
+              onClick={() => executeOp('REMOVE_LAST')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -206,7 +330,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'REMOVE')}
+              onClick={() => executeOp('REMOVE')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -214,7 +338,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'REMOVE_BY_VALUE')}
+              onClick={() => executeOp('REMOVE_BY_VALUE')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -235,7 +359,10 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <input
                 type="text"
                 value={key}
-                onChange={(e) => setKey(e.target.value)}
+                onChange={(e) => {
+                  setKey(e.target.value);
+                  clearError();
+                }}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="Enter key (e.g. Java)..."
               />
@@ -247,17 +374,20 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <input
                 type="text"
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => {
+                  setValue(e.target.value);
+                  clearError();
+                }}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="Enter value (e.g. 95)..."
               />
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-2 pt-1">
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'PUT')}
+              onClick={() => executeOp('PUT')}
               disabled={loading}
               className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-emerald-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -265,7 +395,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'GET')}
+              onClick={() => executeOp('GET')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -273,7 +403,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'CONTAINS_KEY')}
+              onClick={() => executeOp('CONTAINS_KEY')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -281,7 +411,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'CONTAINS_VALUE')}
+              onClick={() => executeOp('CONTAINS_VALUE')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -289,7 +419,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'REMOVE')}
+              onClick={() => executeOp('REMOVE')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -308,8 +438,11 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <input
                 type="text"
                 value={key}
-                onChange={(e) => setKey(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-indigo-500"
+                onChange={(e) => {
+                  setKey(e.target.value);
+                  clearError();
+                }}
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-indigo-500 transition-colors"
                 placeholder="Enter key (e.g. 50)..."
               />
             </div>
@@ -318,17 +451,20 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <input
                 type="text"
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-indigo-500"
+                onChange={(e) => {
+                  setValue(e.target.value);
+                  clearError();
+                }}
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-indigo-500 transition-colors"
                 placeholder="Enter value..."
               />
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 pt-2">
+          <div className="flex flex-wrap items-center gap-2 pt-1">
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'PUT')}
+              onClick={() => executeOp('PUT')}
               disabled={loading}
               className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -336,7 +472,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'GET')}
+              onClick={() => executeOp('GET')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -344,7 +480,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'CONTAINS_KEY')}
+              onClick={() => executeOp('CONTAINS_KEY')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -352,7 +488,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'FIRST_KEY')}
+              onClick={() => executeOp('FIRST_KEY')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -360,7 +496,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'LAST_KEY')}
+              onClick={() => executeOp('LAST_KEY')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -368,7 +504,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'REMOVE')}
+              onClick={() => executeOp('REMOVE')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -388,7 +524,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </select>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'TRAVERSAL')}
+              onClick={() => executeOp('TRAVERSAL')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -406,16 +542,19 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <input
               type="text"
               value={value}
-              onChange={(e) => setValue(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-indigo-500"
+              onChange={(e) => {
+                setValue(e.target.value);
+                clearError();
+              }}
+              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-indigo-500 transition-colors"
               placeholder="Enter numeric or comparable value (e.g. 10)..."
             />
           </div>
 
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-2 pt-1">
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'OFFER')}
+              onClick={() => executeOp('OFFER')}
               disabled={loading}
               className="flex items-center gap-1.5 px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-amber-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -423,7 +562,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'PEEK')}
+              onClick={() => executeOp('PEEK')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -431,7 +570,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             </button>
             <button
               type="button"
-              onClick={(e) => handleSubmit(e, 'POLL')}
+              onClick={() => executeOp('POLL')}
               disabled={loading}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >

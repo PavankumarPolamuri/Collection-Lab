@@ -115,7 +115,7 @@ export const CollectionView: React.FC<CollectionViewProps> = ({
         else if (op === 'REMOVE_FIRST') res = await api.removeFirstLinkedList();
         else if (op === 'REMOVE_LAST') res = await api.removeLastLinkedList();
         else if (op === 'REMOVE') res = await api.removeLinkedListNode(targetIndex);
-        else if (op === 'REMOVE_BY_VALUE') res = await api.removeValueArrayList(targetValue);
+        else if (op === 'REMOVE_BY_VALUE') res = await api.removeValueLinkedList(targetValue);
       } else if (collectionId === 'hashmap') {
         if (op === 'PUT') res = await api.putHashMap(targetKey, targetValue);
         else if (op === 'GET') res = await api.getHashMapValue(targetKey);
