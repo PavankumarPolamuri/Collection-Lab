@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   List, Link as LinkIcon, Hash, GitFork, Layers, Code2,
-  Sparkles, ArrowRight, RefreshCcw, ArrowLeftRight, ListFilter, Network, GitBranch
+  Sparkles, ArrowRight, ChevronUp, RefreshCcw, ArrowLeftRight, ListFilter, Network, GitBranch
 } from 'lucide-react';
 
 interface LandingPageProps {
@@ -10,6 +10,7 @@ interface LandingPageProps {
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCodeViewer }) => {
+  const [showAll, setShowAll] = useState<boolean>(false);
 
   const collections = [
     {
@@ -85,18 +86,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       bullets: [{ label: 'Add First/Last', value: 'O(1)' }, { label: 'Remove First/Last', value: 'O(1)' }]
     },
     {
-      id: 'priorityqueue',
-      name: 'PriorityQueue',
-      description: 'Binary heap for priority-based element retrieval.',
-      icon: Layers,
-      cardBg: 'bg-[#10182A]',
-      borderColor: 'border-[#EC4899]/30 hover:border-[#EC4899]',
-      glowClass: 'hover:glow-priorityqueue',
-      iconBg: 'bg-[#EC4899] text-white',
-      btnBg: 'bg-[#EC4899] hover:bg-pink-600 text-white shadow-pink-500/20',
-      bullets: [{ label: 'Offer', value: 'O(log n)' }, { label: 'Poll', value: 'O(log n)' }, { label: 'Peek', value: 'O(1)' }]
-    },
-    {
       id: 'hashmap',
       name: 'HashMap',
       description: 'Hash table with collision handling and resizing.',
@@ -119,6 +108,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       iconBg: 'bg-[#10C98B] text-white',
       btnBg: 'bg-[#10C98B] hover:bg-emerald-600 text-white shadow-emerald-500/20',
       bullets: [{ label: 'Add', value: 'O(1)' }, { label: 'Remove', value: 'O(1)' }, { label: 'Contains', value: 'O(1)' }]
+    },
+    {
+      id: 'priorityqueue',
+      name: 'PriorityQueue',
+      description: 'Binary heap for priority-based element retrieval.',
+      icon: Layers,
+      cardBg: 'bg-[#10182A]',
+      borderColor: 'border-[#EC4899]/30 hover:border-[#EC4899]',
+      glowClass: 'hover:glow-priorityqueue',
+      iconBg: 'bg-[#EC4899] text-white',
+      btnBg: 'bg-[#EC4899] hover:bg-pink-600 text-white shadow-pink-500/20',
+      bullets: [{ label: 'Offer', value: 'O(log n)' }, { label: 'Poll', value: 'O(log n)' }, { label: 'Peek', value: 'O(1)' }]
     },
     {
       id: 'treemap',
@@ -194,6 +195,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
     }
   ];
 
+  const visibleCollections = showAll ? collections : collections.slice(0, 4);
+
   return (
     <div className="bg-[#080D18] py-3 max-w-[1400px] mx-auto px-4 sm:px-6 space-y-8">
       {/* HERO SECTION */}
@@ -239,15 +242,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-xs font-mono font-bold text-[#A7B3C7] uppercase tracking-wider">
-            Featured 15 Data Structure Visualizers
+            Featured Data Structure Visualizers ({visibleCollections.length} / {collections.length})
           </h2>
           <span className="text-xs font-mono text-[#FF6B00] bg-[#FF6B00]/10 px-2.5 py-0.5 rounded-full border border-[#FF6B00]/30">
             Real Spring Boot Backend
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {collections.map((col) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-5">
+          {visibleCollections.map((col) => {
             const Icon = col.icon;
             return (
               <div
@@ -259,7 +262,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
                     <div className={`p-2.5 rounded-xl ${col.iconBg}`}>
                       <Icon className="w-5 h-5" />
                     </div>
-                    <div className="flex gap-1.5">
+                    <div className="flex gap-1.5 flex-wrap">
                       {col.bullets.map((b, idx) => (
                         <span key={idx} className="text-[10px] font-mono px-2 py-0.5 bg-black/30 text-amber-300 rounded border border-white/10">
                           {b.label}: <strong>{b.value}</strong>
@@ -293,6 +296,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectTab, onOpenCod
               </div>
             );
           })}
+        </div>
+
+        {/* EXPLORE COLLECTIONS / SHOW LESS TOGGLE BUTTON */}
+        <div className="flex justify-center pt-4">
+          {!showAll ? (
+            <button
+              onClick={() => setShowAll(true)}
+              className="flex items-center gap-2.5 px-7 py-3.5 bg-[#FF6B00] hover:bg-[#EA580C] text-white rounded-full text-sm font-bold shadow-xl shadow-orange-500/25 transition-all cursor-pointer hover:scale-105"
+            >
+              <span>Explore Collections &rarr;</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => setShowAll(false)}
+              className="flex items-center gap-2.5 px-7 py-3.5 bg-[#10182A] hover:bg-[#121C30] text-slate-200 border border-white/20 rounded-full text-sm font-bold shadow-xl transition-all cursor-pointer hover:scale-105"
+            >
+              <span>Show Less &uarr;</span>
+              <ChevronUp className="w-4 h-4 text-[#FF6B00]" />
+            </button>
+          )}
         </div>
       </section>
     </div>
