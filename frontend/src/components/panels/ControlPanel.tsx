@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Search, Trash2, RotateCcw, ArrowDownUp, RefreshCw, Key, Hash, Edit3 } from 'lucide-react';
+import { Plus, Search, Trash2, RotateCcw, ArrowDownUp, RefreshCw, Key, Hash } from 'lucide-react';
 import type { CollectionType } from '../../types/collections';
 
 interface ControlPanelProps {
@@ -15,20 +15,33 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   onReset,
   loading = false
 }) => {
-  const [value, setValue] = useState<string>('10');
-  const [key, setKey] = useState<string>('Java');
+  const [value, setValue] = useState<string>('');
+  const [key, setKey] = useState<string>('');
   const [index, setIndex] = useState<number>(0);
   const [traversalType, setTraversalType] = useState<'inorder' | 'preorder' | 'postorder'>('inorder');
+  const [validationError, setValidationError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent, op: string) => {
+  const handleAddSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (loading) return;
-    const finalValue = value.trim() !== '' ? value.trim() : '10';
-    const finalKey = key.trim() !== '' ? key.trim() : 'Key1';
-    onExecute(op, { value: finalValue, key: finalKey, index: index >= 0 ? index : 0, type: traversalType });
+    const trimmed = value.trim();
+    if (!trimmed) {
+      setValidationError('Please enter a value.');
+      return;
+    }
+    setValidationError(null);
+    onExecute('ADD', { value: trimmed });
+    setValue(''); // Auto-clear input field after adding so user can immediately type next value
   };
 
-  const normalizedType = collectionType ? collectionType.toUpperCase().replace('-', '_') : 'ARRAY_LIST';
+  const handleOtherSubmit = (e: React.FormEvent, op: string) => {
+    e.preventDefault();
+    if (loading) return;
+    onExecute(op, { value, key, index, type: traversalType });
+  };
+  const handleSubmit = handleOtherSubmit;
+
+  const normalizedType = collectionType ? String(collectionType).toUpperCase().replace(/-/g, '_') : 'ARRAY_LIST';
   const isArrayList = normalizedType === 'ARRAY_LIST' || normalizedType === 'ARRAYLIST';
   const isLinkedList = normalizedType === 'LINKED_LIST' || normalizedType === 'LINKEDLIST';
   const isHashMap = normalizedType === 'HASH_MAP' || normalizedType === 'HASHMAP';
@@ -43,8 +56,9 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           Operation Controls
         </h3>
         <button
+          type="button"
           onClick={onReset}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-500/30 rounded-xl text-xs font-sans font-semibold transition-colors"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-500/30 rounded-xl text-xs font-sans font-semibold transition-colors cursor-pointer"
           title="Reset this collection to empty state"
         >
           <RotateCcw className="w-3.5 h-3.5" />
@@ -54,98 +68,39 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 
       {/* ARRAY LIST CONTROLS */}
       {isArrayList && (
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Value / New Value</label>
+        <form onSubmit={handleAddSubmit} className="space-y-3">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-mono font-medium text-slate-400">
+              Enter element/value
+            </label>
+            <div className="flex flex-col sm:flex-row gap-2.5">
               <input
                 type="text"
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-blue-500 transition-colors"
-                placeholder="Enter value..."
+                onChange={(e) => {
+                  setValue(e.target.value);
+                  if (validationError) setValidationError(null);
+                }}
+                className="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-indigo-500 transition-colors"
+                placeholder="Enter element/value (e.g. 10, Pavan, Java)..."
+                autoFocus
               />
+              <button
+                type="submit"
+                disabled={loading}
+                className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/20 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+              >
+                <Plus className="w-4 h-4" />
+                <span>ADD</span>
+              </button>
             </div>
-            <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Index (For Insert / Get / Edit / Remove)</label>
-              <input
-                type="number"
-                value={index}
-                onChange={(e) => setIndex(parseInt(e.target.value) || 0)}
-                min="0"
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-blue-500 transition-colors"
-              />
-            </div>
+            {validationError && (
+              <p className="text-xs text-rose-400 font-mono mt-1 flex items-center gap-1">
+                ⚠️ {validationError}
+              </p>
+            )}
           </div>
-
-          <div className="flex flex-wrap gap-2 pt-2">
-            <button
-              type="button"
-              onClick={(e) => handleSubmit(e, 'ADD')}
-              disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Plus className="w-3.5 h-3.5" /> Add (Append)
-            </button>
-            <button
-              type="button"
-              onClick={(e) => handleSubmit(e, 'ADD_AT')}
-              disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Insert At Index
-            </button>
-            <button
-              type="button"
-              onClick={(e) => handleSubmit(e, 'GET')}
-              disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Search className="w-3.5 h-3.5" /> Get At Index
-            </button>
-            <button
-              type="button"
-              onClick={(e) => handleSubmit(e, 'SET')}
-              disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-              title="Replace element at index with new value"
-            >
-              <Edit3 className="w-3.5 h-3.5" /> Edit / Update
-            </button>
-            <button
-              type="button"
-              onClick={(e) => handleSubmit(e, 'CONTAINS')}
-              disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Search className="w-3.5 h-3.5" /> Contains Value
-            </button>
-            <button
-              type="button"
-              onClick={(e) => handleSubmit(e, 'INDEX_OF')}
-              disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Index Of Value
-            </button>
-            <button
-              type="button"
-              onClick={(e) => handleSubmit(e, 'REMOVE')}
-              disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Trash2 className="w-3.5 h-3.5" /> Remove At Index
-            </button>
-            <button
-              type="button"
-              onClick={(e) => handleSubmit(e, 'REMOVE_BY_VALUE')}
-              disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Trash2 className="w-3.5 h-3.5" /> Remove By Value
-            </button>
-          </div>
-        </div>
+        </form>
       )}
 
       {/* LINKED LIST CONTROLS */}
