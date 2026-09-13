@@ -12,8 +12,23 @@ import java.nio.file.Paths;
 @Component
 public class SourceCodeReader {
 
+    public String getCanonicalCollectionName(String collectionName) {
+        if (collectionName == null || collectionName.isBlank()) return "";
+        String lower = collectionName.toLowerCase();
+        switch (lower) {
+            case "arraylist": return "ArrayList";
+            case "linkedlist": return "LinkedList";
+            case "hashmap": return "HashMap";
+            case "treemap": return "TreeMap";
+            case "priorityqueue": return "PriorityQueue";
+            default:
+                return collectionName.substring(0, 1).toUpperCase() + collectionName.substring(1);
+        }
+    }
+
     public String readCollectionSourceCode(String collectionName) {
-        String filename = "Custom" + collectionName + ".java";
+        String canonicalName = getCanonicalCollectionName(collectionName);
+        String filename = "Custom" + canonicalName + ".java";
 
         // 1. Try loading from Classpath Resource (Bundled in JAR in production/Render)
         try {

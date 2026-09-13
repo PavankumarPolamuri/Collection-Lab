@@ -20,10 +20,11 @@ public class CodeViewerController {
     @GetMapping("/{collectionName}")
     public ResponseEntity<Map<String, String>> getSourceCode(@PathVariable String collectionName) {
         String sanitized = collectionName.replaceAll("[^a-zA-Z]", "");
-        String sourceCode = sourceCodeReader.readCollectionSourceCode(sanitized);
+        String canonicalName = sourceCodeReader.getCanonicalCollectionName(sanitized);
+        String sourceCode = sourceCodeReader.readCollectionSourceCode(canonicalName);
         return ResponseEntity.ok(Map.of(
-                "collection", collectionName,
-                "className", "Custom" + sanitized + ".java",
+                "collection", canonicalName,
+                "className", "Custom" + canonicalName + ".java",
                 "code", sourceCode
         ));
     }
