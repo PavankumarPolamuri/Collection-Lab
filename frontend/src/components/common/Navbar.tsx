@@ -74,12 +74,14 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between gap-4">
         
         {/* BRAND LOGO & TITLE */}
-        <div
+        <button
+          type="button"
           onClick={() => {
             onSelectTab('home');
             setMobileMenuOpen(false);
           }}
-          className="flex items-center gap-3 cursor-pointer group shrink-0"
+          className="flex items-center gap-3 cursor-pointer group shrink-0 text-left bg-transparent border-0 p-0 focus:outline-none"
+          aria-label="Go to CollectionLab home"
         >
           <div className="p-2.5 bg-[#FF6B00] rounded-xl text-white shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform">
             <Box className="w-5 h-5" />
@@ -93,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               15 Custom Java DSA Visualizers
             </span>
           </div>
-        </div>
+        </button>
 
         {/* DESKTOP NAVIGATION LINKS */}
         <nav className="hidden md:flex items-center gap-1.5 font-sans font-medium text-xs sm:text-sm">
