@@ -71,59 +71,67 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 
           <div className="flex flex-wrap gap-2 pt-2">
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'ADD')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> Add (Append)
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'ADD_AT')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Insert At Index
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'GET')}
               disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Get At Index
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'SET')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               title="Replace element at index with new value"
             >
               <Edit3 className="w-3.5 h-3.5" /> Edit / Update
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'CONTAINS')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Contains Value
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'INDEX_OF')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Index Of Value
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE')}
               disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> Remove At Index
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE_BY_VALUE')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> Remove By Value
             </button>
@@ -159,81 +167,92 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 
           <div className="flex flex-wrap gap-2 pt-2">
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'ADD_FIRST')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> Add First (HEAD)
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'ADD_LAST')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> Add Last (TAIL)
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'ADD_AT')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Insert At Index
             </button>
 
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'GET')}
               disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Get At Index
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'SET')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Set At Index
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'CONTAINS')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Contains Value
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'INDEX_OF')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Index Of Value
             </button>
 
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE_FIRST')}
               disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> Remove First
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE_LAST')}
               disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> Remove Last
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE')}
               disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Remove At Index
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE_BY_VALUE')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> Remove By Value
             </button>
@@ -273,37 +292,42 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 
           <div className="flex flex-wrap gap-2 pt-2">
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'PUT')}
               disabled={loading || !key || !value}
-              className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-emerald-600/20 transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-emerald-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> PUT (Insert / Update)
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'GET')}
               disabled={loading || !key}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> GET Value
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'CONTAINS_KEY')}
               disabled={loading || !key}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Contains Key
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'CONTAINS_VALUE')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Contains Value
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE')}
               disabled={loading || !key}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> REMOVE Key
             </button>
@@ -339,44 +363,50 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 
           <div className="flex flex-wrap items-center gap-2 pt-2">
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'PUT')}
               disabled={loading || !key}
-              className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> PUT Node
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'GET')}
               disabled={loading || !key}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> GET Node
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'CONTAINS_KEY')}
               disabled={loading || !key}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> Contains Key
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'FIRST_KEY')}
               disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               First Key (Min)
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'LAST_KEY')}
               disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Last Key (Max)
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'REMOVE')}
               disabled={loading || !key}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> REMOVE Node
             </button>
@@ -393,9 +423,10 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <option value="postorder">Post-order (LRN)</option>
             </select>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'TRAVERSAL')}
               disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <RefreshCw className="w-3.5 h-3.5" /> Run Traversal
             </button>
@@ -419,23 +450,26 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 
           <div className="flex flex-wrap gap-2 pt-2">
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'OFFER')}
               disabled={loading || !value}
-              className="flex items-center gap-1.5 px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-amber-600/20 transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-amber-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-3.5 h-3.5" /> OFFER (Insert & Sift Up)
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'PEEK')}
               disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="w-3.5 h-3.5" /> PEEK (Read Min Root)
             </button>
             <button
+              type="button"
               onClick={(e) => handleSubmit(e, 'POLL')}
               disabled={loading}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Trash2 className="w-3.5 h-3.5" /> POLL (Extract Min & Sift Down)
             </button>
