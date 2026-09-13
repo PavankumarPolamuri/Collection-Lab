@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Search, Trash2, RotateCcw, ArrowDownUp, RefreshCw, Key, Hash } from 'lucide-react';
+import { Plus, Search, Trash2, RotateCcw, ArrowDownUp, RefreshCw, Key, Hash, Edit3 } from 'lucide-react';
 import type { CollectionType } from '../../types/collections';
 
 interface ControlPanelProps {
@@ -35,7 +35,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
         </h3>
         <button
           onClick={onReset}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-500/30 rounded-xl text-xs font-sans font-semibold transition-colors"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-500/30 rounded-xl text-xs font-sans font-semibold transition-colors"
           title="Reset this collection to empty state"
         >
           <RotateCcw className="w-3.5 h-3.5" />
@@ -48,7 +48,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Value</label>
+              <label className="block text-xs font-medium text-slate-400 mb-1">Value / New Value</label>
               <input
                 type="text"
                 value={value}
@@ -58,7 +58,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Index (For Insert / Get / Set / Remove)</label>
+              <label className="block text-xs font-medium text-slate-400 mb-1">Index (For Insert / Get / Edit / Remove)</label>
               <input
                 type="number"
                 value={index}
@@ -95,8 +95,9 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               onClick={(e) => handleSubmit(e, 'SET')}
               disabled={loading || !value}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition-all disabled:opacity-50"
+              title="Replace element at index with new value"
             >
-              Set At Index
+              <Edit3 className="w-3.5 h-3.5" /> Edit / Update
             </button>
             <button
               onClick={(e) => handleSubmit(e, 'CONTAINS')}

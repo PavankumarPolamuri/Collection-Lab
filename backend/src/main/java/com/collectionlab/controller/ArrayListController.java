@@ -109,7 +109,7 @@ public class ArrayListController {
         details.put("index", index);
 
         OperationResponse<ArrayListStateDto> response = new OperationResponse<>(
-                "ARRAY_LIST", "SET", true, Map.of("index", index, "value", request.getValue()),
+                "ARRAY_LIST", "EDIT / UPDATE", true, Map.of("index", index, "value", request.getValue()),
                 "O(1)", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);

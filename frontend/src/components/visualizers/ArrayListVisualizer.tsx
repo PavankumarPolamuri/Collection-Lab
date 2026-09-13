@@ -66,7 +66,7 @@ export const ArrayListVisualizer: React.FC<ArrayListVisualizerProps> = ({ state,
             {elements.map((item, idx) => {
               const isFilled = idx < size && item !== null;
               const isLastAdded = lastResponse?.operation === 'ADD' && idx === size - 1;
-              const isAccessed = (lastResponse?.operation === 'GET' || lastResponse?.operation === 'SET') && lastResponse?.internalDetails?.index === idx;
+              const isAccessed = (lastResponse?.operation === 'GET' || lastResponse?.operation === 'SET' || lastResponse?.operation === 'EDIT' || lastResponse?.operation === 'EDIT / UPDATE') && lastResponse?.internalDetails?.index === idx;
 
               return (
                 <div key={idx} className="flex flex-col items-center gap-1.5">
