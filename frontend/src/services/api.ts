@@ -9,8 +9,12 @@ import type {
   SourceCodeResponse
 } from '../types/collections';
 
-const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || '/api';
-const API_BASE_URL = rawBaseUrl.endsWith('/') ? rawBaseUrl.slice(0, -1) : rawBaseUrl;
+const rawBaseUrl = (import.meta.env.VITE_API_BASE_URL || '/api').trim();
+let cleanBase = rawBaseUrl.endsWith('/') ? rawBaseUrl.slice(0, -1) : rawBaseUrl;
+if (cleanBase.startsWith('http') && !cleanBase.endsWith('/api')) {
+  cleanBase += '/api';
+}
+const API_BASE_URL = cleanBase;
 
 async function safeFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
   try {
