@@ -25,7 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const searchRef = useRef<HTMLDivElement>(null);
 
   const collections = [
-    { id: 'arraylist', name: 'ArrayList', desc: 'Dynamic Array & Resizing', icon: Layers, color: 'text-[#84CC16] bg-[#84CC16]/10 border border-[#84CC16]/20' },
+    { id: 'arraylist', name: 'ArrayList', desc: 'Dynamic Array & Resizing', icon: Layers, color: 'text-[#F59E0B] bg-[#F59E0B]/10 border border-[#F59E0B]/20' },
     { id: 'linkedlist', name: 'LinkedList', desc: 'Doubly Linked Node Chain', icon: GitCommit, color: 'text-[#10C98B] bg-[#10C98B]/10 border border-[#10C98B]/20' },
     { id: 'circularlinkedlist', name: 'Circular LinkedList', desc: 'Circular Tail-to-Head Loop', icon: RefreshCcw, color: 'text-[#06B6D4] bg-[#06B6D4]/10 border border-[#06B6D4]/20' },
     { id: 'stack', name: 'Stack', desc: 'LIFO Vertical Array', icon: Layers, color: 'text-[#3B82F6] bg-[#3B82F6]/10 border border-[#3B82F6]/20' },
@@ -34,7 +34,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'priorityqueue', name: 'PriorityQueue', desc: 'Binary Min-Heap Array', icon: ArrowUp10, color: 'text-[#F97316] bg-[#F97316]/10 border border-[#F97316]/20' },
     { id: 'hashmap', name: 'HashMap', desc: 'Chaining & Load Factor', icon: Grid, color: 'text-[#EC4899] bg-[#EC4899]/10 border border-[#EC4899]/20' },
     { id: 'hashset', name: 'HashSet', desc: 'Unique Bucket Table', icon: Hash, color: 'text-[#F43F5E] bg-[#F43F5E]/10 border border-[#F43F5E]/20' },
-    { id: 'treemap', name: 'TreeMap', desc: 'Red-Black BST & Search', icon: GitFork, color: 'text-[#F59E0B] bg-[#F59E0B]/10 border border-[#F59E0B]/20' },
+    { id: 'treemap', name: 'TreeMap', desc: 'Red-Black BST & Search', icon: GitFork, color: 'text-[#84CC16] bg-[#84CC16]/10 border border-[#84CC16]/20' },
     { id: 'bst', name: 'Binary Search Tree', desc: 'BST Node Hierarchy', icon: GitFork, color: 'text-[#6366F1] bg-[#6366F1]/10 border border-[#6366F1]/20' },
     { id: 'heap', name: 'Min Heap', desc: 'Binary Min-Heap Tree', icon: ArrowUp10, color: 'text-[#14B8A6] bg-[#14B8A6]/10 border border-[#14B8A6]/20' },
     { id: 'trie', name: 'Trie', desc: 'Prefix Tree & Autocomplete', icon: Network, color: 'text-[#0EA5E9] bg-[#0EA5E9]/10 border border-[#0EA5E9]/20' },
@@ -83,13 +83,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="flex items-center gap-3 cursor-pointer group shrink-0 text-left bg-transparent border-0 p-0 focus:outline-none"
           aria-label="Go to CollectionLab home"
         >
-          <div className="p-2.5 bg-[#84CC16] rounded-xl text-black shadow-md shadow-lime-500/20 group-hover:scale-105 transition-transform">
+          <div className="p-2.5 bg-[#F59E0B] rounded-xl text-black shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform">
             <Box className="w-5 h-5 stroke-[2.5]" />
           </div>
           <div>
             <div className="font-heading font-extrabold text-base sm:text-lg tracking-tight text-white flex items-center gap-1 leading-none">
               <span>Collection</span>
-              <span className="text-[#84CC16]">Lab</span>
+              <span className="text-[#F59E0B]">Lab</span>
             </div>
             <span className="text-[10px] text-[#A7B3C7] hidden lg:block mt-0.5 font-sans font-medium">
               15 Custom Java DSA Visualizers
@@ -105,7 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectTab('home')}
             className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'home' || currentTab === 'landing'
-                ? 'text-[#84CC16] bg-[#84CC16]/15 font-semibold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
+                ? 'text-[#F59E0B] bg-[#F59E0B]/15 font-semibold px-3.5 py-1.5 rounded-full border border-[#F59E0B]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
             }`}
           >
@@ -119,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => setCollectionsOpen(!collectionsOpen)}
               className={`flex items-center gap-1.5 transition-all cursor-pointer ${
                 isCollectionActive
-                  ? 'text-[#84CC16] bg-[#84CC16]/15 font-semibold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
+                  ? 'text-[#F59E0B] bg-[#F59E0B]/15 font-semibold px-3.5 py-1.5 rounded-full border border-[#F59E0B]/30 shadow-xs'
                   : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
               }`}
             >
@@ -144,7 +144,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       }}
                       className={`flex items-center gap-3 w-full p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
                         currentTab === col.id
-                          ? 'bg-lime-500/15 border border-lime-500/30'
+                          ? 'bg-amber-500/15 border border-amber-500/30'
                           : 'hover:bg-[#121C30]'
                       }`}
                     >
@@ -167,7 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectTab('learning')}
             className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'learning'
-                ? 'text-[#84CC16] bg-[#84CC16]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
+                ? 'text-[#F59E0B] bg-[#F59E0B]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#F59E0B]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
             }`}
           >
@@ -180,7 +180,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectTab('benchmark')}
             className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'benchmark'
-                ? 'text-[#84CC16] bg-[#84CC16]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
+                ? 'text-[#F59E0B] bg-[#F59E0B]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#F59E0B]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
             }`}
           >
@@ -193,7 +193,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectTab('about')}
             className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'about'
-                ? 'text-[#84CC16] bg-[#84CC16]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
+                ? 'text-[#F59E0B] bg-[#F59E0B]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#F59E0B]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
             }`}
           >
@@ -206,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectTab('contact')}
             className={`flex items-center gap-1.5 transition-all cursor-pointer ${
               currentTab === 'contact'
-                ? 'text-[#84CC16] bg-[#84CC16]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#84CC16]/30 shadow-xs'
+                ? 'text-[#F59E0B] bg-[#F59E0B]/15 font-bold px-3.5 py-1.5 rounded-full border border-[#F59E0B]/30 shadow-xs'
                 : 'text-[#A7B3C7] hover:text-white hover:bg-[#10182A] px-3 py-1.5 rounded-xl'
             }`}
           >
@@ -229,7 +229,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }}
                 onFocus={() => setSearchOpen(true)}
                 placeholder="Search collections..."
-                className="w-56 sm:w-64 lg:w-72 bg-[#10182A] border border-white/10 rounded-full pl-9 pr-4 py-1.5 text-xs text-white placeholder:text-[#718096] focus:outline-none focus:border-[#84CC16] focus:ring-1 focus:ring-[#84CC16]/50 transition-all font-sans"
+                className="w-56 sm:w-64 lg:w-72 bg-[#10182A] border border-white/10 rounded-full pl-9 pr-4 py-1.5 text-xs text-white placeholder:text-[#718096] focus:outline-none focus:border-[#F59E0B] focus:ring-1 focus:ring-[#F59E0B]/50 transition-all font-sans"
               />
             </div>
 
@@ -249,7 +249,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     className="flex items-center justify-between w-full px-3 py-2 rounded-xl text-left text-xs hover:bg-[#121C30] transition-colors cursor-pointer"
                   >
                     <span className="font-medium text-white">{item.name}</span>
-                    <span className="text-[9px] font-mono px-1.5 py-0.5 bg-lime-500/20 text-[#84CC16] rounded border border-lime-500/30">
+                    <span className="text-[9px] font-mono px-1.5 py-0.5 bg-amber-500/20 text-[#F59E0B] rounded border border-amber-500/30">
                       {item.category}
                     </span>
                   </button>
@@ -260,7 +260,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => onOpenCodeViewer()}
-            className="flex items-center gap-2 px-4 py-2 bg-[#84CC16] hover:bg-[#65A30D] text-black font-extrabold rounded-full text-xs shadow-md shadow-lime-500/20 transition-all shrink-0 cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 bg-[#F59E0B] hover:bg-[#D97706] text-black font-extrabold rounded-full text-xs shadow-md shadow-amber-500/20 transition-all shrink-0 cursor-pointer"
             title="Inspect Real Java Backend Source Code"
           >
             <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">

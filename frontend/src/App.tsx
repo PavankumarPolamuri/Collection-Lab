@@ -54,7 +54,7 @@ export function App() {
   const isCollectionTab = collectionIds.includes(currentTab);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#080D18] text-white font-sans selection:bg-[#84CC16]/30 selection:text-lime-200">
+    <div className="min-h-screen flex flex-col bg-[#080D18] text-white font-sans selection:bg-[#F59E0B]/30 selection:text-amber-200">
       <Navbar
         currentTab={currentTab}
         onSelectTab={(tabId: string) => setCurrentTab(tabId)}

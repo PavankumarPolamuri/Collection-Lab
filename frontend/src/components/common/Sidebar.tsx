@@ -55,11 +55,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, setCurrentTab }) =
                       onClick={() => setCurrentTab(item.id)}
                       className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-sans transition-all duration-150 ${
                         isActive
-                          ? 'bg-[#84CC16]/15 text-[#84CC16] dark:bg-lime-950/40 dark:text-lime-400 font-semibold border border-[#84CC16]/30 dark:border-lime-800'
+                          ? 'bg-[#F59E0B]/15 text-[#F59E0B] dark:bg-amber-950/40 dark:text-amber-400 font-semibold border border-[#F59E0B]/30 dark:border-amber-800'
                           : 'text-[#475569] dark:text-slate-300 hover:text-[#0F172A] hover:bg-slate-50 dark:hover:bg-slate-800 font-medium'
                       }`}
                     >
-                      <Icon className={`w-4 h-4 ${isActive ? 'text-[#84CC16] dark:text-lime-400' : 'text-[#475569] dark:text-slate-400'}`} />
+                      <Icon className={`w-4 h-4 ${isActive ? 'text-[#F59E0B] dark:text-amber-400' : 'text-[#475569] dark:text-slate-400'}`} />
                       <span>{item.label}</span>
                     </button>
                   );

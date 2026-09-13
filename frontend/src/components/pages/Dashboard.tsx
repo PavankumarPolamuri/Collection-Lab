@@ -11,7 +11,7 @@ interface DashboardProps {
 
 export const Dashboard: React.FC<DashboardProps> = ({ onSelectCollection, onOpenCodeViewer }) => {
   const collections = [
-    { id: 'arraylist', name: 'Custom ArrayList', type: 'Dynamic Array', complexity: 'O(1) amortized', description: 'Dynamic resizing, 0-indexed element access, shift-left removal, shift-right insertion.', icon: Layers, iconBg: 'bg-[#84CC16] text-black font-extrabold', btnBg: 'bg-[#84CC16] hover:bg-[#65A30D] text-black font-extrabold' },
+    { id: 'arraylist', name: 'Custom ArrayList', type: 'Dynamic Array', complexity: 'O(1) amortized', description: 'Dynamic resizing, 0-indexed element access, shift-left removal, shift-right insertion.', icon: Layers, iconBg: 'bg-[#F59E0B] text-black font-extrabold', btnBg: 'bg-[#F59E0B] hover:bg-[#D97706] text-black font-extrabold' },
     { id: 'linkedlist', name: 'Custom LinkedList', type: 'Doubly Linked List', complexity: 'O(1) head/tail', description: 'Bi-directional nodes with data, next, and prev references. HEAD and TAIL pointers.', icon: GitCommit, iconBg: 'bg-[#10C98B] text-black font-extrabold', btnBg: 'bg-[#10C98B] hover:bg-[#0E9F6E] text-black font-extrabold' },
     { id: 'circularlinkedlist', name: 'Circular LinkedList', type: 'Circular Linked Loop', complexity: 'O(1) head/tail', description: 'Linked node sequence where the tail node next reference loops back to head.', icon: RefreshCcw, iconBg: 'bg-[#06B6D4] text-black font-extrabold', btnBg: 'bg-[#06B6D4] hover:bg-[#0891B2] text-black font-extrabold' },
     { id: 'stack', name: 'Custom Stack', type: 'LIFO Vertical Stack', complexity: 'O(1) push/pop', description: 'Last-In First-Out data structure with PUSH, POP, and PEEK operations at TOP.', icon: Layers, iconBg: 'bg-[#3B82F6] text-white font-extrabold', btnBg: 'bg-[#3B82F6] hover:bg-[#2563EB] text-white font-extrabold' },
@@ -20,7 +20,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectCollection, onOpen
     { id: 'priorityqueue', name: 'Custom PriorityQueue', type: 'Binary Min-Heap Array', complexity: 'O(log n) offer/poll', description: 'Complete binary min-heap stored in array with sift-up and sift-down element ordering.', icon: ArrowUp10, iconBg: 'bg-[#F97316] text-black font-extrabold', btnBg: 'bg-[#F97316] hover:bg-[#EA580C] text-black font-extrabold' },
     { id: 'hashmap', name: 'Custom HashMap', type: 'Separate Chaining Hash Table', complexity: 'O(1) average', description: 'Bucket array, hash function, linked list entry collision resolution, dynamic load factor rehashing.', icon: Grid, iconBg: 'bg-[#EC4899] text-white font-extrabold', btnBg: 'bg-[#EC4899] hover:bg-[#DB2777] text-white font-extrabold' },
     { id: 'hashset', name: 'Custom HashSet', type: 'Unique Bucket Table', complexity: 'O(1) average', description: 'Hash bucket array ensuring distinct set element uniqueness without duplicates.', icon: Hash, iconBg: 'bg-[#F43F5E] text-white font-extrabold', btnBg: 'bg-[#F43F5E] hover:bg-[#E11D48] text-white font-extrabold' },
-    { id: 'treemap', name: 'Custom TreeMap', type: 'Binary Search Tree (BST)', complexity: 'O(log n) average', description: 'Strict left < node < right ordering, 3-case node deletion algorithms, and in-order traversals.', icon: GitFork, iconBg: 'bg-[#F59E0B] text-black font-extrabold', btnBg: 'bg-[#F59E0B] hover:bg-[#D97706] text-black font-extrabold' },
+    { id: 'treemap', name: 'Custom TreeMap', type: 'Binary Search Tree (BST)', complexity: 'O(log n) average', description: 'Strict left < node < right ordering, 3-case node deletion algorithms, and in-order traversals.', icon: GitFork, iconBg: 'bg-[#84CC16] text-black font-extrabold', btnBg: 'bg-[#84CC16] hover:bg-[#65A30D] text-black font-extrabold' },
     { id: 'bst', name: 'Binary Search Tree', type: 'BST Node Hierarchy', complexity: 'O(log n) average', description: 'Ordered binary tree hierarchy supporting insert, search, delete, and traversals.', icon: GitFork, iconBg: 'bg-[#6366F1] text-white font-extrabold', btnBg: 'bg-[#6366F1] hover:bg-[#4F46E5] text-white font-extrabold' },
     { id: 'heap', name: 'Custom Min Heap', type: 'Binary Min-Heap Tree', complexity: 'O(log n) insert/extract', description: 'Binary min-heap parent \u2264 child tree structure with underlying array mapping.', icon: ArrowUp10, iconBg: 'bg-[#14B8A6] text-black font-extrabold', btnBg: 'bg-[#14B8A6] hover:bg-[#0D9488] text-black font-extrabold' },
     { id: 'trie', name: 'Custom Trie', type: 'Prefix Tree', complexity: 'O(L) word search', description: 'Character node prefix tree for fast word lookup, deletion, and autocomplete search.', icon: Network, iconBg: 'bg-[#0EA5E9] text-black font-extrabold', btnBg: 'bg-[#0EA5E9] hover:bg-[#0284C7] text-black font-extrabold' },
@@ -57,7 +57,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectCollection, onOpen
             return (
               <div
                 key={col.id}
-                className="bg-white dark:bg-slate-900 border border-[#DCE6F2] dark:border-slate-800 hover:border-[#84CC16]/40 rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-4 transition-all hover:-translate-y-0.5"
+                className="bg-white dark:bg-slate-900 border border-[#DCE6F2] dark:border-slate-800 hover:border-[#F59E0B]/40 rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-4 transition-all hover:-translate-y-0.5"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -82,7 +82,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectCollection, onOpen
                 <div className="pt-3 border-t border-[#DCE6F2] dark:border-slate-800 flex items-center justify-between">
                   <button
                     onClick={() => onOpenCodeViewer(col.id)}
-                    className="flex items-center gap-1 text-xs text-[#475569] hover:text-[#84CC16] dark:text-slate-400 dark:hover:text-lime-400 font-mono font-medium transition-colors cursor-pointer"
+                    className="flex items-center gap-1 text-xs text-[#475569] hover:text-[#F59E0B] dark:text-slate-400 dark:hover:text-amber-400 font-mono font-medium transition-colors cursor-pointer"
                   >
                     <Code2 className="w-3.5 h-3.5" /> Source
                   </button>
