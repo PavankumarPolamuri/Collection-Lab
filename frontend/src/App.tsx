@@ -14,7 +14,7 @@ import { ContactPage } from './components/pages/ContactPage';
 import type { OperationHistoryItem } from './types/collections';
 
 export function App() {
-  const [currentTab, setCurrentTab] = useState<string>('arraylist');
+  const [currentTab, setCurrentTab] = useState<string>('home');
   const [codeModalOpen, setCodeModalOpen] = useState<boolean>(false);
   const [codeCollection, setCodeCollection] = useState<string>('ArrayList');
   const [history, setHistory] = useState<OperationHistoryItem[]>([]);
