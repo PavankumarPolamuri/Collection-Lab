@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/heap")
@@ -36,9 +38,14 @@ public class HeapController {
         heap.insert(request.getValue(), steps);
 
         HeapStateDto newState = collectionService.getHeapState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("insertedValue", request.getValue());
+        details.put("minRoot", heap.peek());
+        details.put("result", "Inserted '" + request.getValue() + "', Min Root = '" + heap.peek() + "'");
+
         OperationResponse<HeapStateDto> response = new OperationResponse<>(
                 "HEAP", "INSERT", true, request.getValue(),
-                "O(log n)", steps, prevState, newState, null, null
+                "O(log n)", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -52,9 +59,14 @@ public class HeapController {
         String minVal = heap.extractMin(steps);
 
         HeapStateDto newState = collectionService.getHeapState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("extractedMin", minVal);
+        details.put("newMinRoot", heap.peek());
+        details.put("result", minVal != null ? "Extracted Min Root '" + minVal + "'" : "Heap is empty");
+
         OperationResponse<HeapStateDto> response = new OperationResponse<>(
-                "HEAP", "EXTRACT_MIN", true, minVal,
-                "O(log n)", steps, prevState, newState, null, null
+                "HEAP", "EXTRACT_MIN", minVal != null, minVal,
+                "O(log n)", steps, prevState, newState, details, minVal == null ? "Heap is empty" : null
         );
         return ResponseEntity.ok(response);
     }
@@ -67,9 +79,13 @@ public class HeapController {
         List<String> steps = new ArrayList<>();
         String minVal = heap.peek(steps);
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("minRoot", minVal);
+        details.put("result", minVal != null ? "Min Root = '" + minVal + "'" : "Heap is empty");
+
         OperationResponse<HeapStateDto> response = new OperationResponse<>(
-                "HEAP", "PEEK", true, minVal,
-                "O(1)", steps, state, state, null, null
+                "HEAP", "PEEK", minVal != null, minVal,
+                "O(1)", steps, state, state, details, minVal == null ? "Heap is empty" : null
         );
         return ResponseEntity.ok(response);
     }
@@ -80,10 +96,13 @@ public class HeapController {
         collectionService.resetMinHeap();
         HeapStateDto newState = collectionService.getHeapState();
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("result", "Cleared all elements from Min-Heap");
+
         OperationResponse<HeapStateDto> response = new OperationResponse<>(
                 "HEAP", "CLEAR", true, null,
                 "O(1)", List.of("Cleared all elements from Min-Heap."),
-                prevState, newState, null, null
+                prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }

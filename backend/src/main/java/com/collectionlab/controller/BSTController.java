@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/bst")
@@ -36,9 +38,13 @@ public class BSTController {
         bst.insert(request.getValue(), steps);
 
         BSTStateDto newState = collectionService.getBSTState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("key", request.getValue());
+        details.put("result", "Inserted key '" + request.getValue() + "' into BST");
+
         OperationResponse<BSTStateDto> response = new OperationResponse<>(
                 "BST", "INSERT", true, request.getValue(),
-                "O(log n) avg / O(n) worst", steps, prevState, newState, null, null
+                "O(log n) avg / O(n) worst", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -51,9 +57,14 @@ public class BSTController {
         List<String> steps = new ArrayList<>();
         boolean found = bst.search(request.getValue(), steps);
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("key", request.getValue());
+        details.put("found", found);
+        details.put("result", found ? "Key '" + request.getValue() + "' FOUND in BST" : "Key '" + request.getValue() + "' NOT FOUND in BST");
+
         OperationResponse<BSTStateDto> response = new OperationResponse<>(
                 "BST", "SEARCH", found, request.getValue(),
-                "O(log n) avg / O(n) worst", steps, state, state, null, null
+                "O(log n) avg / O(n) worst", steps, state, state, details, found ? null : "Key '" + request.getValue() + "' not found"
         );
         return ResponseEntity.ok(response);
     }
@@ -67,9 +78,13 @@ public class BSTController {
         bst.delete(key, steps);
 
         BSTStateDto newState = collectionService.getBSTState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("key", key);
+        details.put("result", "Deleted key '" + key + "' from BST");
+
         OperationResponse<BSTStateDto> response = new OperationResponse<>(
                 "BST", "DELETE", true, key,
-                "O(log n) avg / O(n) worst", steps, prevState, newState, null, null
+                "O(log n) avg / O(n) worst", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -82,9 +97,14 @@ public class BSTController {
         List<String> traversalRes = bst.traversal(type, steps);
 
         BSTStateDto state = collectionService.getBSTStateWithTraversal(traversalRes);
+        Map<String, Object> details = new HashMap<>();
+        details.put("traversalType", type);
+        details.put("traversal", traversalRes);
+        details.put("result", type.toUpperCase() + " Traversal = " + traversalRes);
+
         OperationResponse<BSTStateDto> response = new OperationResponse<>(
                 "BST", "TRAVERSAL_" + type.toUpperCase(), true, type,
-                "O(n)", steps, state, state, null, null
+                "O(n)", steps, state, state, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -95,10 +115,13 @@ public class BSTController {
         collectionService.resetBST();
         BSTStateDto newState = collectionService.getBSTState();
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("result", "Cleared all nodes from Binary Search Tree");
+
         OperationResponse<BSTStateDto> response = new OperationResponse<>(
                 "BST", "CLEAR", true, null,
                 "O(1)", List.of("Cleared all nodes from Binary Search Tree."),
-                prevState, newState, null, null
+                prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }

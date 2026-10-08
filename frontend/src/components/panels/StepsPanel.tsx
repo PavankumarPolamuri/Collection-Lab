@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListOrdered, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
+import { ListOrdered, CheckCircle2, AlertCircle, Clock, Sparkles } from 'lucide-react';
 import type { OperationResponse } from '../../types/collections';
 
 interface StepsPanelProps {
@@ -22,6 +22,7 @@ export const StepsPanel: React.FC<StepsPanelProps> = ({ lastResponse }) => {
   }
 
   const { operation, success, complexity, steps, errorMessage, internalDetails } = lastResponse;
+  const resultText = internalDetails?.result || (success ? `Successfully completed ${operation}` : (errorMessage || 'Operation Failed'));
 
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm dark:shadow-xl space-y-4 transition-colors">
@@ -48,7 +49,27 @@ export const StepsPanel: React.FC<StepsPanelProps> = ({ lastResponse }) => {
         </div>
       </div>
 
-      {errorMessage && (
+      {/* Hero Result Banner */}
+      <div className={`p-4 rounded-xl border flex flex-col gap-1.5 shadow-sm ${
+        success 
+          ? 'bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 border-blue-500/30 dark:border-blue-500/40'
+          : 'bg-rose-50 dark:bg-rose-500/10 border-rose-200 dark:border-rose-500/30'
+      }`}>
+        <div className="flex items-center justify-between text-xs font-mono font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+          <span className="flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+            Computed Answer / Operation Result
+          </span>
+          <span className="text-[10px] font-normal text-slate-500 font-mono">{lastResponse.structure}</span>
+        </div>
+        <div className={`text-sm font-mono font-bold leading-relaxed ${
+          success ? 'text-slate-900 dark:text-white' : 'text-rose-600 dark:text-rose-400'
+        }`}>
+          {resultText}
+        </div>
+      </div>
+
+      {errorMessage && !internalDetails?.result && (
         <div className="p-3 bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 rounded-xl text-xs text-rose-600 dark:text-rose-300 font-mono">
           <strong>Error:</strong> {errorMessage}
         </div>
@@ -82,7 +103,7 @@ export const StepsPanel: React.FC<StepsPanelProps> = ({ lastResponse }) => {
           <div className="flex flex-wrap gap-2 text-xs font-mono">
             {Object.entries(internalDetails).map(([k, v]) => (
               <span key={k} className="px-2 py-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">
-                <span className="text-slate-400">{k}:</span> <strong className="text-blue-600 dark:text-blue-300">{String(v)}</strong>
+                <span className="text-slate-400">{k}:</span> <strong className="text-blue-600 dark:text-blue-300">{Array.isArray(v) ? JSON.stringify(v) : String(v)}</strong>
               </span>
             ))}
           </div>

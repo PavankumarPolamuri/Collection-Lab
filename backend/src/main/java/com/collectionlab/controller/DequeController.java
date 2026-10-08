@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/deque")
@@ -36,9 +38,14 @@ public class DequeController {
         deque.addFirst(request.getValue(), steps);
 
         DequeStateDto newState = collectionService.getDequeState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("addedValue", request.getValue());
+        details.put("position", "FIRST");
+        details.put("result", "Added '" + request.getValue() + "' to FRONT of Deque");
+
         OperationResponse<DequeStateDto> response = new OperationResponse<>(
                 "DEQUE", "ADD_FIRST", true, request.getValue(),
-                "O(1)", steps, prevState, newState, null, null
+                "O(1)", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -52,9 +59,14 @@ public class DequeController {
         deque.addLast(request.getValue(), steps);
 
         DequeStateDto newState = collectionService.getDequeState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("addedValue", request.getValue());
+        details.put("position", "LAST");
+        details.put("result", "Added '" + request.getValue() + "' to REAR of Deque");
+
         OperationResponse<DequeStateDto> response = new OperationResponse<>(
                 "DEQUE", "ADD_LAST", true, request.getValue(),
-                "O(1)", steps, prevState, newState, null, null
+                "O(1)", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -68,9 +80,14 @@ public class DequeController {
         String val = deque.removeFirst(steps);
 
         DequeStateDto newState = collectionService.getDequeState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("removedValue", val);
+        details.put("position", "FIRST");
+        details.put("result", val != null ? "Removed FRONT element '" + val + "'" : "Deque is empty");
+
         OperationResponse<DequeStateDto> response = new OperationResponse<>(
-                "DEQUE", "REMOVE_FIRST", true, val,
-                "O(1)", steps, prevState, newState, null, null
+                "DEQUE", "REMOVE_FIRST", val != null, val,
+                "O(1)", steps, prevState, newState, details, val == null ? "Deque is empty" : null
         );
         return ResponseEntity.ok(response);
     }
@@ -84,9 +101,14 @@ public class DequeController {
         String val = deque.removeLast(steps);
 
         DequeStateDto newState = collectionService.getDequeState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("removedValue", val);
+        details.put("position", "LAST");
+        details.put("result", val != null ? "Removed REAR element '" + val + "'" : "Deque is empty");
+
         OperationResponse<DequeStateDto> response = new OperationResponse<>(
-                "DEQUE", "REMOVE_LAST", true, val,
-                "O(1)", steps, prevState, newState, null, null
+                "DEQUE", "REMOVE_LAST", val != null, val,
+                "O(1)", steps, prevState, newState, details, val == null ? "Deque is empty" : null
         );
         return ResponseEntity.ok(response);
     }
@@ -99,9 +121,13 @@ public class DequeController {
         List<String> steps = new ArrayList<>();
         String val = deque.peekFirst(steps);
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("firstValue", val);
+        details.put("result", val != null ? "FRONT Element = '" + val + "'" : "Deque is empty");
+
         OperationResponse<DequeStateDto> response = new OperationResponse<>(
-                "DEQUE", "PEEK_FIRST", true, val,
-                "O(1)", steps, state, state, null, null
+                "DEQUE", "PEEK_FIRST", val != null, val,
+                "O(1)", steps, state, state, details, val == null ? "Deque is empty" : null
         );
         return ResponseEntity.ok(response);
     }
@@ -114,9 +140,13 @@ public class DequeController {
         List<String> steps = new ArrayList<>();
         String val = deque.peekLast(steps);
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("lastValue", val);
+        details.put("result", val != null ? "REAR Element = '" + val + "'" : "Deque is empty");
+
         OperationResponse<DequeStateDto> response = new OperationResponse<>(
-                "DEQUE", "PEEK_LAST", true, val,
-                "O(1)", steps, state, state, null, null
+                "DEQUE", "PEEK_LAST", val != null, val,
+                "O(1)", steps, state, state, details, val == null ? "Deque is empty" : null
         );
         return ResponseEntity.ok(response);
     }
@@ -127,10 +157,13 @@ public class DequeController {
         collectionService.resetDeque();
         DequeStateDto newState = collectionService.getDequeState();
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("result", "Cleared all elements from Deque");
+
         OperationResponse<DequeStateDto> response = new OperationResponse<>(
                 "DEQUE", "CLEAR", true, null,
                 "O(1)", List.of("Cleared all elements from Deque."),
-                prevState, newState, null, null
+                prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }

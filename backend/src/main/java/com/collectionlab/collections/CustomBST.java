@@ -126,7 +126,6 @@ public class CustomBST<K extends Comparable<K>> {
                 }
                 node.key = minNode.key;
                 node.right = deleteRecursive(node.right, minNode.key, null);
-                size--;
             }
         }
         return node;

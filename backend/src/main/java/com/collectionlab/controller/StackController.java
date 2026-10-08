@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/stack")
@@ -36,9 +38,14 @@ public class StackController {
         stack.push(request.getValue(), steps);
 
         StackStateDto newState = collectionService.getStackState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("pushedValue", request.getValue());
+        details.put("topValue", stack.peek());
+        details.put("result", "Pushed '" + request.getValue() + "' onto Stack (New Top: '" + stack.peek() + "')");
+
         OperationResponse<StackStateDto> response = new OperationResponse<>(
                 "STACK", "PUSH", true, request.getValue(),
-                "O(1)", steps, prevState, newState, null, null
+                "O(1)", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -52,9 +59,14 @@ public class StackController {
         String popped = stack.pop(steps);
 
         StackStateDto newState = collectionService.getStackState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("poppedValue", popped);
+        details.put("newTopValue", stack.peek());
+        details.put("result", popped != null ? "Popped '" + popped + "' from Stack" : "Stack is empty");
+
         OperationResponse<StackStateDto> response = new OperationResponse<>(
-                "STACK", "POP", true, popped,
-                "O(1)", steps, prevState, newState, null, null
+                "STACK", "POP", popped != null, popped,
+                "O(1)", steps, prevState, newState, details, popped == null ? "Stack is empty" : null
         );
         return ResponseEntity.ok(response);
     }
@@ -67,9 +79,13 @@ public class StackController {
         List<String> steps = new ArrayList<>();
         String top = stack.peek(steps);
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("topValue", top);
+        details.put("result", top != null ? "Top Element = '" + top + "'" : "Stack is empty");
+
         OperationResponse<StackStateDto> response = new OperationResponse<>(
-                "STACK", "PEEK", true, top,
-                "O(1)", steps, state, state, null, null
+                "STACK", "PEEK", top != null, top,
+                "O(1)", steps, state, state, details, top == null ? "Stack is empty" : null
         );
         return ResponseEntity.ok(response);
     }
@@ -80,10 +96,13 @@ public class StackController {
         collectionService.resetStack();
         StackStateDto newState = collectionService.getStackState();
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("result", "Cleared all elements from Stack");
+
         OperationResponse<StackStateDto> response = new OperationResponse<>(
                 "STACK", "CLEAR", true, null,
                 "O(1)", List.of("Cleared all elements from Stack."),
-                prevState, newState, null, null
+                prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }

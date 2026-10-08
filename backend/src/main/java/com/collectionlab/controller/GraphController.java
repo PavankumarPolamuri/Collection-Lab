@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,9 +38,14 @@ public class GraphController {
         boolean added = graph.addVertex(request.getValue(), steps);
 
         GraphStateDto newState = collectionService.getGraphState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("vertex", request.getValue());
+        details.put("added", added);
+        details.put("result", added ? "Added vertex '" + request.getValue() + "'" : "Vertex '" + request.getValue() + "' already exists");
+
         OperationResponse<GraphStateDto> response = new OperationResponse<>(
                 "GRAPH", "ADD_VERTEX", added, request.getValue(),
-                "O(1)", steps, prevState, newState, null, null
+                "O(1)", steps, prevState, newState, details, added ? null : "Vertex '" + request.getValue() + "' already exists"
         );
         return ResponseEntity.ok(response);
     }
@@ -56,9 +62,15 @@ public class GraphController {
         boolean added = graph.addEdge(from, to, steps);
 
         GraphStateDto newState = collectionService.getGraphState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("from", from);
+        details.put("to", to);
+        details.put("added", added);
+        details.put("result", added ? "Connected edge ('" + from + "' <-> '" + to + "')" : "Edge creation failed");
+
         OperationResponse<GraphStateDto> response = new OperationResponse<>(
                 "GRAPH", "ADD_EDGE", added, Map.of("from", from != null ? from : "", "to", to != null ? to : ""),
-                "O(1)", steps, prevState, newState, null, null
+                "O(1)", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -75,9 +87,15 @@ public class GraphController {
         boolean removed = graph.removeEdge(from, to, steps);
 
         GraphStateDto newState = collectionService.getGraphState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("from", from);
+        details.put("to", to);
+        details.put("removed", removed);
+        details.put("result", removed ? "Removed edge ('" + from + "' <-> '" + to + "')" : "Edge ('" + from + "' <-> '" + to + "') not found");
+
         OperationResponse<GraphStateDto> response = new OperationResponse<>(
                 "GRAPH", "REMOVE_EDGE", removed, Map.of("from", from != null ? from : "", "to", to != null ? to : ""),
-                "O(V)", steps, prevState, newState, null, null
+                "O(V)", steps, prevState, newState, details, removed ? null : "Edge not found"
         );
         return ResponseEntity.ok(response);
     }
@@ -91,9 +109,14 @@ public class GraphController {
         boolean removed = graph.removeVertex(label, steps);
 
         GraphStateDto newState = collectionService.getGraphState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("vertex", label);
+        details.put("removed", removed);
+        details.put("result", removed ? "Removed vertex '" + label + "' and connected edges" : "Vertex '" + label + "' not found");
+
         OperationResponse<GraphStateDto> response = new OperationResponse<>(
                 "GRAPH", "REMOVE_VERTEX", removed, label,
-                "O(V + E)", steps, prevState, newState, null, null
+                "O(V + E)", steps, prevState, newState, details, removed ? null : "Vertex not found"
         );
         return ResponseEntity.ok(response);
     }
@@ -106,9 +129,14 @@ public class GraphController {
         List<String> traversal = graph.bfs(start, steps);
 
         GraphStateDto state = collectionService.getGraphStateWithTraversal(traversal);
+        Map<String, Object> details = new HashMap<>();
+        details.put("startVertex", start != null ? start : (traversal.isEmpty() ? "None" : traversal.get(0)));
+        details.put("traversal", traversal);
+        details.put("result", "BFS Traversal = " + traversal);
+
         OperationResponse<GraphStateDto> response = new OperationResponse<>(
                 "GRAPH", "BFS", true, start,
-                "O(V + E)", steps, state, state, null, null
+                "O(V + E)", steps, state, state, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -121,9 +149,14 @@ public class GraphController {
         List<String> traversal = graph.dfs(start, steps);
 
         GraphStateDto state = collectionService.getGraphStateWithTraversal(traversal);
+        Map<String, Object> details = new HashMap<>();
+        details.put("startVertex", start != null ? start : (traversal.isEmpty() ? "None" : traversal.get(0)));
+        details.put("traversal", traversal);
+        details.put("result", "DFS Traversal = " + traversal);
+
         OperationResponse<GraphStateDto> response = new OperationResponse<>(
                 "GRAPH", "DFS", true, start,
-                "O(V + E)", steps, state, state, null, null
+                "O(V + E)", steps, state, state, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -134,10 +167,13 @@ public class GraphController {
         collectionService.resetGraph();
         GraphStateDto newState = collectionService.getGraphState();
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("result", "Cleared all vertices and edges from Graph");
+
         OperationResponse<GraphStateDto> response = new OperationResponse<>(
                 "GRAPH", "CLEAR", true, null,
                 "O(1)", List.of("Cleared all vertices and edges from Graph."),
-                prevState, newState, null, null
+                prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }

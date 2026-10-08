@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/hashset")
@@ -36,9 +38,14 @@ public class HashSetController {
         boolean added = set.add(request.getValue(), steps);
 
         HashSetStateDto newState = collectionService.getHashSetState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("element", request.getValue());
+        details.put("added", added);
+        details.put("result", added ? "Added element '" + request.getValue() + "' to HashSet" : "Element '" + request.getValue() + "' ALREADY EXISTS in HashSet");
+
         OperationResponse<HashSetStateDto> response = new OperationResponse<>(
                 "HASH_SET", "ADD", added, request.getValue(),
-                "O(1) average", steps, prevState, newState, null, null
+                "O(1) average", steps, prevState, newState, details, added ? null : "Element already exists"
         );
         return ResponseEntity.ok(response);
     }
@@ -52,9 +59,14 @@ public class HashSetController {
         boolean removed = set.remove(request.getValue(), steps);
 
         HashSetStateDto newState = collectionService.getHashSetState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("element", request.getValue());
+        details.put("removed", removed);
+        details.put("result", removed ? "Removed element '" + request.getValue() + "' from HashSet" : "Element '" + request.getValue() + "' NOT FOUND in HashSet");
+
         OperationResponse<HashSetStateDto> response = new OperationResponse<>(
                 "HASH_SET", "REMOVE", removed, request.getValue(),
-                "O(1) average", steps, prevState, newState, null, null
+                "O(1) average", steps, prevState, newState, details, removed ? null : "Element '" + request.getValue() + "' not found"
         );
         return ResponseEntity.ok(response);
     }
@@ -67,9 +79,14 @@ public class HashSetController {
         List<String> steps = new ArrayList<>();
         boolean found = set.contains(request.getValue(), steps);
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("element", request.getValue());
+        details.put("found", found);
+        details.put("result", found ? "Element '" + request.getValue() + "' EXISTS in HashSet" : "Element '" + request.getValue() + "' NOT FOUND in HashSet");
+
         OperationResponse<HashSetStateDto> response = new OperationResponse<>(
                 "HASH_SET", "CONTAINS", found, request.getValue(),
-                "O(1) average", steps, state, state, null, null
+                "O(1) average", steps, state, state, details, found ? null : "Element '" + request.getValue() + "' not found"
         );
         return ResponseEntity.ok(response);
     }
@@ -80,10 +97,13 @@ public class HashSetController {
         collectionService.resetHashSet();
         HashSetStateDto newState = collectionService.getHashSetState();
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("result", "Cleared all elements from HashSet");
+
         OperationResponse<HashSetStateDto> response = new OperationResponse<>(
                 "HASH_SET", "CLEAR", true, null,
                 "O(1)", List.of("Cleared all elements from HashSet."),
-                prevState, newState, null, null
+                prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }

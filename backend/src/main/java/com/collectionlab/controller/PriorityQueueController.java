@@ -24,7 +24,7 @@ public class PriorityQueueController {
         this.collectionService = collectionService;
     }
 
-    @GetMapping("/state")
+    @GetMapping({"", "/state"})
     public ResponseEntity<PriorityQueueStateDto> getState() {
         return ResponseEntity.ok(collectionService.getPriorityQueueState());
     }

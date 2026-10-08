@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,9 +38,13 @@ public class CircularLinkedListController {
         list.addFirst(request.getValue(), steps);
 
         CircularLinkedListStateDto newState = collectionService.getCircularLinkedListState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("addedValue", request.getValue());
+        details.put("result", "Added '" + request.getValue() + "' as HEAD of Circular LinkedList");
+
         OperationResponse<CircularLinkedListStateDto> response = new OperationResponse<>(
                 "CIRCULAR_LINKED_LIST", "ADD_FIRST", true, request.getValue(),
-                "O(1)", steps, prevState, newState, null, null
+                "O(1)", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -53,9 +58,13 @@ public class CircularLinkedListController {
         list.addLast(request.getValue(), steps);
 
         CircularLinkedListStateDto newState = collectionService.getCircularLinkedListState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("addedValue", request.getValue());
+        details.put("result", "Added '" + request.getValue() + "' as TAIL of Circular LinkedList");
+
         OperationResponse<CircularLinkedListStateDto> response = new OperationResponse<>(
                 "CIRCULAR_LINKED_LIST", "ADD_LAST", true, request.getValue(),
-                "O(1)", steps, prevState, newState, null, null
+                "O(1)", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -69,9 +78,14 @@ public class CircularLinkedListController {
         list.add(request.getIndex(), request.getValue(), steps);
 
         CircularLinkedListStateDto newState = collectionService.getCircularLinkedListState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("index", request.getIndex());
+        details.put("insertedValue", request.getValue());
+        details.put("result", "Inserted '" + request.getValue() + "' at index " + request.getIndex());
+
         OperationResponse<CircularLinkedListStateDto> response = new OperationResponse<>(
                 "CIRCULAR_LINKED_LIST", "ADD_AT", true, Map.of("index", request.getIndex(), "value", request.getValue()),
-                "O(n)", steps, prevState, newState, null, null
+                "O(n)", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -84,9 +98,14 @@ public class CircularLinkedListController {
         List<String> steps = new ArrayList<>();
         String val = list.get(index, steps);
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("index", index);
+        details.put("value", val);
+        details.put("result", "Node at index " + index + " = '" + val + "'");
+
         OperationResponse<CircularLinkedListStateDto> response = new OperationResponse<>(
                 "CIRCULAR_LINKED_LIST", "GET", true, index,
-                "O(n)", steps, state, state, null, null
+                "O(n)", steps, state, state, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -100,9 +119,15 @@ public class CircularLinkedListController {
         String oldVal = list.set(index, request.getValue(), steps);
 
         CircularLinkedListStateDto newState = collectionService.getCircularLinkedListState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("index", index);
+        details.put("oldValue", oldVal);
+        details.put("newValue", request.getValue());
+        details.put("result", "Updated index " + index + " to '" + request.getValue() + "'");
+
         OperationResponse<CircularLinkedListStateDto> response = new OperationResponse<>(
                 "CIRCULAR_LINKED_LIST", "EDIT", true, Map.of("index", index, "value", request.getValue()),
-                "O(n)", steps, prevState, newState, null, null
+                "O(n)", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -116,9 +141,13 @@ public class CircularLinkedListController {
         String val = list.removeFirst(steps);
 
         CircularLinkedListStateDto newState = collectionService.getCircularLinkedListState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("removedValue", val);
+        details.put("result", val != null ? "Removed HEAD node '" + val + "'" : "List is empty");
+
         OperationResponse<CircularLinkedListStateDto> response = new OperationResponse<>(
-                "CIRCULAR_LINKED_LIST", "REMOVE_FIRST", true, val,
-                "O(1)", steps, prevState, newState, null, null
+                "CIRCULAR_LINKED_LIST", "REMOVE_FIRST", val != null, val,
+                "O(1)", steps, prevState, newState, details, val == null ? "List is empty" : null
         );
         return ResponseEntity.ok(response);
     }
@@ -132,9 +161,13 @@ public class CircularLinkedListController {
         String val = list.removeLast(steps);
 
         CircularLinkedListStateDto newState = collectionService.getCircularLinkedListState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("removedValue", val);
+        details.put("result", val != null ? "Removed TAIL node '" + val + "'" : "List is empty");
+
         OperationResponse<CircularLinkedListStateDto> response = new OperationResponse<>(
-                "CIRCULAR_LINKED_LIST", "REMOVE_LAST", true, val,
-                "O(n)", steps, prevState, newState, null, null
+                "CIRCULAR_LINKED_LIST", "REMOVE_LAST", val != null, val,
+                "O(n)", steps, prevState, newState, details, val == null ? "List is empty" : null
         );
         return ResponseEntity.ok(response);
     }
@@ -148,9 +181,14 @@ public class CircularLinkedListController {
         String val = list.remove(index, steps);
 
         CircularLinkedListStateDto newState = collectionService.getCircularLinkedListState();
+        Map<String, Object> details = new HashMap<>();
+        details.put("index", index);
+        details.put("removedValue", val);
+        details.put("result", "Removed node '" + val + "' at index " + index);
+
         OperationResponse<CircularLinkedListStateDto> response = new OperationResponse<>(
                 "CIRCULAR_LINKED_LIST", "REMOVE", true, index,
-                "O(n)", steps, prevState, newState, null, null
+                "O(n)", steps, prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }
@@ -163,9 +201,14 @@ public class CircularLinkedListController {
         List<String> steps = new ArrayList<>();
         boolean found = list.contains(request.getValue(), steps);
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("searchedValue", request.getValue());
+        details.put("found", found);
+        details.put("result", found ? "Found value '" + request.getValue() + "' in Circular LinkedList" : "Value '" + request.getValue() + "' NOT FOUND");
+
         OperationResponse<CircularLinkedListStateDto> response = new OperationResponse<>(
                 "CIRCULAR_LINKED_LIST", "CONTAINS", found, request.getValue(),
-                "O(n)", steps, state, state, null, null
+                "O(n)", steps, state, state, details, found ? null : "Value '" + request.getValue() + "' not found"
         );
         return ResponseEntity.ok(response);
     }
@@ -176,10 +219,13 @@ public class CircularLinkedListController {
         collectionService.resetCircularLinkedList();
         CircularLinkedListStateDto newState = collectionService.getCircularLinkedListState();
 
+        Map<String, Object> details = new HashMap<>();
+        details.put("result", "Cleared all nodes from Circular LinkedList");
+
         OperationResponse<CircularLinkedListStateDto> response = new OperationResponse<>(
                 "CIRCULAR_LINKED_LIST", "CLEAR", true, null,
                 "O(1)", List.of("Cleared all nodes from Circular LinkedList."),
-                prevState, newState, null, null
+                prevState, newState, details, null
         );
         return ResponseEntity.ok(response);
     }

@@ -24,7 +24,7 @@ public class HashMapController {
         this.collectionService = collectionService;
     }
 
-    @GetMapping("/state")
+    @GetMapping({"", "/state"})
     public ResponseEntity<HashMapStateDto> getState() {
         return ResponseEntity.ok(collectionService.getHashMapState());
     }

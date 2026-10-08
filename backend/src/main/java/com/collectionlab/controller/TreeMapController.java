@@ -24,7 +24,7 @@ public class TreeMapController {
         this.collectionService = collectionService;
     }
 
-    @GetMapping("/state")
+    @GetMapping({"", "/state"})
     public ResponseEntity<TreeMapStateDto> getState() {
         return ResponseEntity.ok(collectionService.getTreeMapState());
     }
